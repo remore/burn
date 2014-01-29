@@ -10,6 +10,8 @@ end
 
 Just like Recipe and Cookbook are DSL for Chef rubygem, this dead simple DSL is for Burn rubygem, and we call it Fuel. Burning this Fuel will produce [this](http://www.example.com).
 
+![Hello-world pic][http://k.swd.cc/burn/resource/screenshot/hello-world.png]
+
 Here is another example. With Fuel DSL, you can even compose background music in 1 minute.
 
 ```ruby
@@ -64,7 +66,10 @@ scene do
     sprite "star"
 EOH
 end
-```
+
+```
+
+![star animated gif][http://k.swd.cc/burn/resource/screenshot/star.gif]
 
 Please visit [our project page](http://k.swd.cc/burn/) for more example.
 
