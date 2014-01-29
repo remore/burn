@@ -87,6 +87,7 @@ Please visit [our project page](http://k.swd.cc/burn/) for more example.
 * [Burning Fuel DSL In Action](#burning-fuel-dsl-in-action)
     * [Programming With .rrb(Restricted Ruby) Syntax](#programming-with-rrbrestricted-ruby-syntax)
 * [Notes](#notes)
+    * [Personal Motivation](#personal-motivation)
     * [License](#license)
     * [ToDos](#todos)
 
@@ -432,6 +433,12 @@ TBD
 TBD(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
 
 ## Notes
+
+### Personal Motivation
+
+Creating 8-bit flavored application mean neither outdated nor cheap, but good fit to rapid prototyping. It could be one of best options for education purpose as well.
+
+Moreover, the executables built with burn will work at [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles)([This list](http://wiki.nesdev.com/w/index.php/Emulators) is helpful too). That said, consequently, burn is a multi-platform programming environment.
 
 ### License
 
