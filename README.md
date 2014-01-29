@@ -438,7 +438,7 @@ TBD(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
 
 Creating 8-bit flavored application mean neither outdated nor cheap, but good fit to rapid prototyping. It could be one of best options for education purpose as well.
 
-Moreover, the executables built with burn will work at [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles)([This list](http://wiki.nesdev.com/w/index.php/Emulators) is helpful too). That said, consequently, burn is a multi-platform programming environment.
+Moreover, the executables built with burn will work at [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles). That said, consequently, burn is a multi-platform programming environment.
 
 ### License
 
