@@ -1,0 +1,54 @@
+    if frame>=100 then
+      time=time-1
+      frame=0
+      boss.x=rand
+      boss.y=rand
+    end
+    
+    if time==0 then
+      stop
+      goto "game_over"
+    end
+    
+    sprite "boss"
+    show "TIME:%d%d SCORE:%d%d SPEED:%d", 2, 2, time/10%10, time%10, score/10%10, score%10, speed/3
+    frame+=1
+    player.x-=2 if is_pressed(:left) && player.x>0
+    player.x+=2 if is_pressed(:right) && player.x<232
+    sprite "player"
+    
+    if is_pressed(:a) and is_attacking==0 then
+      is_attacking=1
+      mountain.x=player.x
+      mountain.y=220
+    end
+    
+    if is_attacking>0 then
+      is_attacking+=1
+      mountain.y-=speed
+      if mountain.y>0 then
+        if mountain.y>=boss.y && mountain.y<=boss.y+16 &&
+          mountain.x>=boss.x && mountain.x<=boss.x+24 then
+          sound 'attack'
+          is_attacking=0
+          star.x = mountain.x-4
+          star.y = mountain.y
+          sprite "star"
+          score+=6-(speed/3)
+          if score >100 then
+            stop
+            goto "game_clear"
+          end
+        else
+          sprite "mountain"
+        end
+      else
+        is_attacking=0
+      end
+    else
+      if is_pressed(:up) && speed<15 then
+        speed+=1
+      elsif is_pressed(:down) && speed>1 then
+        speed-=1
+      end
+    end

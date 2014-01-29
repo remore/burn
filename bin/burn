@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+if !ARGV.index('-d') then
+  require 'rubygems'
+else
+  Encoding.default_external = 'UTF-8'
+  ['..', '../lib'].each do |path|
+    $LOAD_PATH.unshift File.expand_path(File.join(File.dirname(__FILE__), path))
+  end
+end
+
+require 'burn'
+include Burn
+BurnTasks.start

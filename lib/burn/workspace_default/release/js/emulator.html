@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>__@__TITLE__@__</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+
+<body>
+  <div class="container">
+    <div class="nes">Loading...</div>
+</div>
+
+<script src="./js/jquery-1.4.2.min.js" type="text/javascript"></script>
+<script src="./js/dynamicaudio-89ba58da476270a9b630.min.js" type="text/javascript"></script>
+<script src="./js/jsnes-4e7a7260aa.js" type="text/javascript"></script>
+<!--[if IE]>
+    <script type="text/vbscript" src="./vbscript/jsnes-ie-hacks.vbscript"></script>
+<![endif]-->
+<script type="text/javascript">
+    var rawdata="__@__ROMDATA__@__";
+    $(function() {
+        new JSNES({
+            'swfPath': './swf/',
+            'ui': $('.nes').text('').JSNESUI({
+                "Working": [
+                    ['My Sample', './main.out']
+                ],
+
+                "Nearly Working": [
+                ]
+            })
+        });
+        $("select").val('./main.out').change();
+        $(".nes-zoom").click();
+        $(".nes-enablesound").click();
+        setTimeout(function(){$.get( "shutdown" ), 1000});
+    });
+</script>
+</body>
+</html>

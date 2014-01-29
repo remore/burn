@@ -1,0 +1,11 @@
+scene do
+  label "HELLO, WORLD!", 2, 2
+
+  label "THIS CODE PRINTS SOME TEXT", 2, 4
+  label "USING ASCII-ENCODED CHARACTER", 2, 5
+  label "SET WITH CAPITAL LETTERS ONLY", 2, 6
+
+  label "TO USE CHR MORE EFFICIENTLY", 2, 8
+  label "YOU'D NEED A CUSTOM ENCODING", 2, 9
+  label "AND A CONVERSION TABLE", 2, 10
+end
