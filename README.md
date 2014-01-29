@@ -88,6 +88,7 @@ Please visit [our project page](http://k.swd.cc/burn/) for more example.
     * [Programming With .rrb(Restricted Ruby) Syntax](#programming-with-rrbrestricted-ruby-syntax)
 * [Notes](#notes)
     * [Personal Motivation](#personal-motivation)
+    * [Helpful Folks](#helpful-folks)
     * [License](#license)
     * [ToDos](#todos)
 
@@ -439,6 +440,10 @@ TBD(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
 Creating 8-bit flavored application mean neither outdated nor cheap, but good fit to rapid prototyping. It could be one of best options for education purpose as well.
 
 Moreover, the executables built with burn will work at [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles). That said, consequently, burn is a multi-platform programming environment.
+
+### Helpful Folks
+
+* Shiru - this project had never been born if I had not found [this article](http://shiru.untergrund.net/articles/programming_nes_games_in_c.htm)
 
 ### License
 
