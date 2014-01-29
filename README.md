@@ -8,7 +8,7 @@ scene do
 end
 ```
 
-Just like Recipe and Cookbook are DSL for Chef rubygem, this dead simple DSL is for Burn rubygem, and we call it Fuel. Burning this Fuel will produce [this](http://www.example.com).
+Just like Recipe and Cookbook are DSL for Chef rubygem, this dead simple DSL is for Burn rubygem, and we call it Fuel. Burning this Fuel will produce [this](http://k.swd.cc/burn/resource/example/hello-world/emulator.html).
 
 ![Hello-world pic](http://k.swd.cc/burn/resource/screenshot/hello-world.png)
 
@@ -33,7 +33,7 @@ music "openning" do
 end
 ```
 
-Check [the output](http://www.example.com) from this. 
+Check [the output](http://k.swd.cc/burn/resource/example/hello-world-with-music/emulator.html) from this. 
 
 Would you like to design retro 8-bit graphics? Here you go.
 
