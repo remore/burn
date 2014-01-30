@@ -75,10 +75,13 @@ Please visit [our project page](http://k.swd.cc/burn/) for more example.
 
 ## Table Of Contents
 
-* [Getting Started](#getting-started)
+* [Introduction](#introduction)
+    * [Less Is More](#less-is-more)
     * [How It Works](#how-it-works)
+* [Getting Started](#getting-started)
     * [Installation](#installation)
     * [Quick Start](#quick-start)
+    * [Burning Sample Fuel DSL](#burning-sample-fuel-dsl)
 * [Fuel DSL Methods](#fuel-dsl-methods)
     * [Scene](#scene)
     * [Sound](#sound)
@@ -92,7 +95,13 @@ Please visit [our project page](http://k.swd.cc/burn/) for more example.
     * [License](#license)
     * [ToDos](#todos)
 
-## Getting Started
+## Introduction
+
+### Less Is More
+
+Creating 8-bit flavored application mean neither outdated nor cheap, but good fit to rapid prototyping. It could be one of best options for education purpose as well.
+
+Moreover, the executables built with burn will work at [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles). That said, consequently, burn is a multi-platform programming environment.
 
 ### How It Works
 
@@ -104,6 +113,8 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 
 This means what burn can do is always less than what cc65 can do.
 
+## Getting Started
+
 ### Installation
 
     gem install burn
@@ -111,7 +122,13 @@ This means what burn can do is always less than what cc65 can do.
 ### Quick Start
 
     echo "scene do{ label 'hello world'}" > main.rb
-    burn -p  # -p: open up emulator right after compilation
+    burn -p
+
+### Burning Sample Fuel DSL
+
+    git clone https://github.com/remore/burn.git
+    cd burn/example/hello_world
+    burn -p
 
 ## Fuel DSL Methods
 
@@ -434,12 +451,6 @@ TBD
 TBD(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
 
 ## Notes
-
-### Personal Motivation
-
-Creating 8-bit flavored application mean neither outdated nor cheap, but good fit to rapid prototyping. It could be one of best options for education purpose as well.
-
-Moreover, the executables built with burn will work at [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles). That said, consequently, burn is a multi-platform programming environment.
 
 ### Helpful Folks
 
