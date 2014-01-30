@@ -111,8 +111,6 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 - compile them to make executable(main.out) by calling cc65
 - provide emulator(JSNES) for rpaid application development
 
-This means what burn can do is always less than what cc65 can do.
-
 ## Getting Started
 
 ### Installation
