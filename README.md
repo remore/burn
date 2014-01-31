@@ -119,7 +119,7 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 
 ### Quick Start
 
-    echo "scene do{ label 'hello world'}" > main.rb
+    echo "scene {label 'hello world'}" > main.rb
     burn -p
 
 ### Burning Sample Fuel DSL
