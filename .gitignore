@@ -15,3 +15,7 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+lib/burn/tools/src/
+lib/burn/tools/win/
+lib/burn/tools/mac/
+lib/burn/tools/other/

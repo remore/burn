@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   
   #s.add_dependency "thor", "~> 0.18.1" # thor must support default_command 
   s.add_dependency "thor"
+  s.add_dependency "archive-tar-minitar"
   
   s.add_development_dependency "rake"
 end

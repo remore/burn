@@ -10,8 +10,23 @@ module Burn
     def self.source_root
       File.dirname(__FILE__) + "/.."
     end
-
+    
     default_task :make
+    
+    desc "init", "Initialize environment"
+    option :debug, :type => :string, :aliases => '-d', :desc => "Debug mode"
+    option :verbose, :type => :boolean, :desc => "Print logs as much as possible", :default => false
+    option :make, :type=>:boolean, :desc=>"Make cc65 binaries from source"
+    def init
+      env = Burn::Util::Os.new
+      base_path = "#{File.dirname(__FILE__)}/tools"
+      remove_dir base_path+ "/"+env.os_name, :verbose => options[:verbose]
+      Burn::Util::Unpack.new.unpack "#{base_path}/#{env.os_name}.tar.gz", base_path
+      if options[:make] then
+        Burn::Util::Unpack.new.unpack "#{base_path}/src.tar.gz", base_path
+        run "#{File.dirname(__FILE__)}/tools/make_exec.sh"
+      end
+    end
 
     desc "make <filename>", "Compile and build application binary from Burn DSL file"
     option :preview, :type => :boolean, :aliases => '-p', :desc => "Preview .out application right after compilation"
