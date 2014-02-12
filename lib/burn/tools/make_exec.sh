@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd $(cd $(dirname $0);pwd)/tools/src/
+cd $1/src/
 make -f make/gcc.mak

@@ -22,7 +22,7 @@ module Burn
         # prepare music.s - music assembler file
         File.write(
           "#{@workspace_root}/tmp/burn/asset/music.s", 
-          File.read(File.dirname(__FILE__)+"/../workspace_default/asset/music.s")
+          File.read("#{@workspace_root}/tmp/burn/asset/music.s")
             .gsub(/__@__EXPORT__@__/, @resources.keys.map{|p| "	.export _music_#{p}"}.join("\n"))
             .gsub(/__@__INCLUDE__@__/, @resources.keys.map{|p| "_music_#{p}: 		.include \"mus_#{p}.s\""}.join("\n"))
         )

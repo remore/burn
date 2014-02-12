@@ -24,7 +24,10 @@ module Burn
       Burn::Util::Unpack.new.unpack "#{base_path}/#{env.os_name}.tar.gz", base_path
       if options[:make] then
         Burn::Util::Unpack.new.unpack "#{base_path}/src.tar.gz", base_path
-        run "#{File.dirname(__FILE__)}/tools/make_exec.sh"
+        run "/bin/bash #{File.dirname(__FILE__)}/tools/make_exec.sh #{base_path}"
+        copy_file "#{base_path}/src/cc65/cc65", "#{base_path}/#{env.os_name}/cc65/bin/cc65", :force => true
+        copy_file "#{base_path}/src/ca65/ca65", "#{base_path}/#{env.os_name}/cc65/bin/ca65", :force => true
+        copy_file "#{base_path}/src/ld65/ld65", "#{base_path}/#{env.os_name}/cc65/bin/ld65", :force => true
       end
     end
 
@@ -100,7 +103,8 @@ EOS
         say "."
         remove_dir "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
         empty_directory "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
-        directory File.dirname(__FILE__) + "/workspace_default", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
+        #directory File.dirname(__FILE__) + "/workspace_default", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
+        Burn::Util::Unpack.new.unpack "#{File.dirname(__FILE__)}/tools/workspace_default.tar.gz", "#{@workspace_root}/tmp/burn"
         
         # compile and build .out
         say ".."
@@ -140,7 +144,7 @@ EOS
         require 'base64'
         File.write(
           "#{@workspace_root}/tmp/burn/release/js/emulator.html", 
-          File.read(File.dirname(__FILE__)+"/workspace_default/release/js/emulator.html")
+          File.read("#{@workspace_root}/tmp/burn/release/js/emulator.html")
             .gsub(/__@__TITLE__@__/, mainfile)
             .gsub(/__@__ROMDATA__@__/,
               Base64::strict_encode64(
@@ -184,7 +188,12 @@ EOS
       if env.is_win? then
         run "start #{browser} #{uri}", :verbose => options[:verbose]
       elsif env.is_mac? then
-        run "open -a #{browser} #{uri}", :verbose => options[:verbose]
+        if File.exists?("/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome") && options[:chrome] then
+          open_up_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+        else
+          open_up_browser = "open -a #{browser}"
+        end
+        run "#{open_up_browser} #{uri}", :verbose => options[:verbose]
       else
         run "/usr/bin/#{browser} #{uri}", :verbose => options[:verbose]
       end

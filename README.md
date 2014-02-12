@@ -116,13 +116,15 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 ### Installation
 
     gem install burn
+    sudo burn init --make
 
 ### Quick Start
 
     echo "scene {label 'hello world'}" > main.rb
     burn -p
+    ls tmp/burn/ | grep main.out
 
-### Burning Sample Fuel DSL
+### Burning Another Sample Fuel DSL
 
     git clone https://github.com/remore/burn.git
     cd burn/example/hello_world
