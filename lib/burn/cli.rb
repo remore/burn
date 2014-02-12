@@ -188,12 +188,8 @@ EOS
       if env.is_win? then
         run "start #{browser} #{uri}", :verbose => options[:verbose]
       elsif env.is_mac? then
-        if File.exists?("/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome") && options[:chrome] then
-          open_up_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
-        else
-          open_up_browser = "open -a #{browser}"
-        end
-        run "#{open_up_browser} #{uri}", :verbose => options[:verbose]
+        browser = "\"/Applications/Google Chrome.app\"" if options[:chrome]
+        run "open -a #{browser} #{uri}", :verbose => options[:verbose]
       else
         run "/usr/bin/#{browser} #{uri}", :verbose => options[:verbose]
       end

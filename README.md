@@ -115,7 +115,7 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 
 ### Installation
 
-    gem install burn
+    sudo gem install burn
     sudo burn init --make
 
 ### Quick Start
