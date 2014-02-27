@@ -182,6 +182,9 @@ EOS
         run "#{command} &", :verbose => options[:verbose]
       end
       
+      # wait for certain period of time to prevent browser from fetching game url too early
+      sleep 1
+      
       # open up browser
       uri = "http://127.0.0.1:17890/emulator.html"
       browser = options[:chrome] ? "chrome" : "firefox"
