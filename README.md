@@ -434,6 +434,42 @@ end
 
 ### Sound
 
+#### duty_cycle(ratio)
+
+The duty_cycle method in a sound can be used to set duty cycle type.
+
+<dl>
+  <dt>ratio Symbol</dt>
+  <dd>duty cycle type to set.
+    <table>
+      <tr>
+        <th>duty cycle type</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>:lowest</td>
+        <td>12.5%</td>
+      </tr>
+      <tr>
+        <td>:lower</td>
+        <td>25%</td>
+      </tr>
+      <tr>
+        <td>:higher</td>
+        <td>50%</td>
+      </tr>
+      <tr>
+        <td>:highest</td>
+        <td>75%</td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+
+#### velocity(level)
+
+The velocity method in a sound can be used to set volume level of the sound.
+
 TBD
 
 ### Music
