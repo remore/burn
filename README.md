@@ -134,8 +134,10 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 ### More Example
 
     git clone https://github.com/remore/burn.git
-    cd burn/example/hello_world
+    cd burn/example/shooting
     burn -p -c
+
+`vi main.rb` and customize this simple shooting game if you please.
 
 ## Fuel DSL Methods
 
