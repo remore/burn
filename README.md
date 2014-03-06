@@ -111,6 +111,11 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 - compile them to make executable(main.out) by calling cc65
 - provide emulator(JSNES) for rpaid application development
 
+### Requirements
+
+- Ruby 1.9.1 and up
+- gcc(for non-windows user)
+
 ## Getting Started
 
 ### Installation
@@ -119,6 +124,8 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
     sudo burn init --make
 
 ### Quick Start
+
+
 
     echo "scene {label 'hello world'}" > main.rb
     burn -p
