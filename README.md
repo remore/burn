@@ -113,8 +113,8 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 
 ### Requirements
 
-- Ruby 1.9.1 and up
-- gcc(for non-windows user)
+- Ruby1.9.1+
+- gcc(for windows user this is not required)
 
 ## Getting Started
 
@@ -125,17 +125,17 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 
 ### Quick Start
 
-
-
     echo "scene {label 'hello world'}" > main.rb
     burn -p
     ls tmp/burn/ | grep main.out
 
-### Burning Another Sample Fuel DSL
+`burn -p` command use Firefox primarily. If you'd like to use chrome, type `burn -p -c` instead.
+
+### More Example
 
     git clone https://github.com/remore/burn.git
     cd burn/example/hello_world
-    burn -p
+    burn -p -c
 
 ## Fuel DSL Methods
 
