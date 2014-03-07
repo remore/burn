@@ -111,6 +111,11 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 - compile them to make executable(main.out) by calling cc65
 - provide emulator(JSNES) for rpaid application development
 
+### Requirements
+
+- Ruby1.9.1+
+- gcc(for windows user this is not required)
+
 ## Getting Started
 
 ### Installation
@@ -124,11 +129,15 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
     burn -p
     ls tmp/burn/ | grep main.out
 
-### Burning Another Sample Fuel DSL
+`burn -p` command use Firefox primarily. If you'd like to use chrome, type `burn -p -c` instead.
+
+### More Example
 
     git clone https://github.com/remore/burn.git
-    cd burn/example/hello_world
-    burn -p
+    cd burn/example/shooting
+    burn -p -c
+
+`vi main.rb` and customize this simple shooting game if you please.
 
 ## Fuel DSL Methods
 
