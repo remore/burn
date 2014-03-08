@@ -108,7 +108,7 @@ Moreover, the executables built with burn will work at [almost any OS](http://en
 Internally, burn contains cc65 executables inside its gemfile and calls them to compile. Main workflow is as follows.
 
 - translate ruby DSL file into c source code
-- compile them to make executable(main.out) by calling cc65
+- compile them to make executable(*.nes) by calling cc65
 - provide emulator(JSNES) for rpaid application development
 
 ### Requirements
@@ -127,7 +127,7 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 
     echo "scene {label 'hello world'}" > main.rb
     burn -p
-    ls tmp/burn/ | grep main.out
+    ls tmp/burn/ | grep main.nes
 
 `burn -p` command use Firefox primarily. If you'd like to use chrome, type `burn -p -c` instead.
 
