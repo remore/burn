@@ -500,6 +500,7 @@ TBD(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
 ### Helpful Folks
 
 * Shiru - this project had never been born if I had not found [this article](http://shiru.untergrund.net/articles/programming_nes_games_in_c.htm)
+* My friend from high school - I appreciate him for sending me fine-grained review as always
 
 ### License
 
