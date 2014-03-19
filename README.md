@@ -1,6 +1,6 @@
-# Burn
+# Burn - a handy toolkit to make .nes application from a single text file written in Ruby DSL
 
-Burn is a free and open source framework that allows you to create 8-bit flavored application using Ruby DSL. In other words, you can *Build UR .Nes*(BURN) file with ruby DSL.
+Burn is a free and open source framework that allows you to create 8-bit flavored application(.nes) using Ruby DSL.
 
 ```ruby
 scene do
@@ -12,7 +12,7 @@ Just like Recipe and Cookbook are DSL for Chef rubygem, this dead simple DSL is 
 
 ![Hello-world pic](http://k.swd.cc/burn/resource/screenshot/hello-world.png)
 
-Here is another example. With Fuel DSL, you can even compose background music in 1 minute.
+Here is another example. With Fuel DSL, you can even compose background music in seconds.
 
 ```ruby
 scene do
