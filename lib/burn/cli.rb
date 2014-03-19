@@ -32,7 +32,7 @@ module Burn
     end
 
     desc "make <filename>", "Compile and build application binary from Burn DSL file"
-    option :preview, :type => :boolean, :aliases => '-p', :desc => "Preview .out application right after compilation"
+    option :preview, :type => :boolean, :aliases => '-p', :desc => "Preview .nes application right after compilation"
     option :debug, :type => :string, :aliases => '-d', :desc => "Debug mode"
     option :verbose, :type => :boolean, :desc => "Print logs as much as possible", :default => false
     option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
@@ -106,7 +106,7 @@ EOS
         #directory File.dirname(__FILE__) + "/workspace_default", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
         Burn::Util::Unpack.new.unpack "#{File.dirname(__FILE__)}/tools/workspace_default.tar.gz", "#{@workspace_root}/tmp/burn"
         
-        # compile and build .out
+        # compile and build .nes
         say ".."
         builder = Builder.new(@workspace_root)
         builder.verbose options[:verbose]
@@ -148,11 +148,11 @@ EOS
             .gsub(/__@__TITLE__@__/, mainfile)
             .gsub(/__@__ROMDATA__@__/,
               Base64::strict_encode64(
-                File.binread("#{@workspace_root}/tmp/burn/main.out")
+                File.binread("#{@workspace_root}/tmp/burn/main.nes")
               )
             )
         )
-        copy_file "#{@workspace_root}/tmp/burn/main.out", "#{@workspace_root}/tmp/burn/release/js/main.out", :verbose => options[:verbose]
+        copy_file "#{@workspace_root}/tmp/burn/main.nes", "#{@workspace_root}/tmp/burn/release/js/main.nes", :verbose => options[:verbose]
         
         say "Burned."
         
@@ -171,7 +171,7 @@ EOS
     
     desc "play <file>", "Invoke application simulator."
     def play(mainfile=nil)
-      mainfile="main.out" if mainfile.nil?
+      mainfile="main.nes" if mainfile.nil?
       env = Burn::Util::Os.new
       
       # boot up webrick httpserver to download emulator script

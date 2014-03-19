@@ -1,6 +1,6 @@
 # Burn
 
-Burn is a free and open source framework that allows you to create 8-bit flavored application using Ruby DSL.
+Burn is a free and open source framework that allows you to create 8-bit flavored application using Ruby DSL. In other words, you can *Build UR .Nes*(BURN) file with ruby DSL.
 
 ```ruby
 scene do
