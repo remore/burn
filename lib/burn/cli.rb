@@ -46,7 +46,7 @@ module Burn
       
       elsif !File.exist?("#{File.dirname(__FILE__)}/tools/#{env.os_name}/cc65/bin/ld65") then
         say "error: you are not ready to burn, most probably you haven't initialized yet."
-        say "to fix this, try following command:"
+        say "to fix this, try the following command:"
         say ""
         say "    burn init"
         say "    (try 'sudo burn init' if you don't have enough permission to change gems folder of your local system)"
@@ -163,10 +163,17 @@ EOS
         )
         copy_file "#{@workspace_root}/tmp/burn/main.out", "#{@workspace_root}/tmp/burn/release/js/main.out", :verbose => options[:verbose]
         
-        say "Burned."
+        say "successfully burned. #{@workspace_root}/tmp/burn/main.nes is available."
         
         # run simulator
-        play if options[:preview]
+        if options[:preview] then
+          play
+        else
+          say "you can run this application by the following command:"
+          say ""
+          say "    burn play"
+          say ""
+        end
       end
     end
     
