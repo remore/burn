@@ -28,7 +28,7 @@ module Burn
         copy_file "#{base_path}/src/cc65/cc65", "#{base_path}/#{env.os_name}/cc65/bin/cc65", :force => true
         copy_file "#{base_path}/src/ca65/ca65", "#{base_path}/#{env.os_name}/cc65/bin/ca65", :force => true
         copy_file "#{base_path}/src/ld65/ld65", "#{base_path}/#{env.os_name}/cc65/bin/ld65", :force => true
-        say ""
+        say "successfully finished. now you are ready to burn."
       end
     end
 
