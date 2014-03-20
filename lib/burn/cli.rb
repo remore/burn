@@ -28,6 +28,7 @@ module Burn
         copy_file "#{base_path}/src/cc65/cc65", "#{base_path}/#{env.os_name}/cc65/bin/cc65", :force => true
         copy_file "#{base_path}/src/ca65/ca65", "#{base_path}/#{env.os_name}/cc65/bin/ca65", :force => true
         copy_file "#{base_path}/src/ld65/ld65", "#{base_path}/#{env.os_name}/cc65/bin/ld65", :force => true
+        say ""
       end
     end
 
@@ -37,10 +38,19 @@ module Burn
     option :verbose, :type => :boolean, :desc => "Print logs as much as possible", :default => false
     option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
     def make(mainfile=nil)
+      env = Burn::Util::Os.new
       mainfile="main.rb" if mainfile.nil?
       
       if !File.exist?(mainfile) then
         help
+      
+      elsif !File.exist?("#{File.dirname(__FILE__)}/tools/#{env.os_name}/cc65/bin/ld65") then
+        say "error: you are not ready to burn, most probably you haven't initialized yet."
+        say "to fix this, try following command:"
+        say ""
+        say "    burn init"
+        say "    (try 'sudo burn init' if you don't have enough permission to change gems folder of your local system)"
+        say ""
       
       else
         
@@ -115,7 +125,6 @@ EOS
         
         # Prepare compilers
         say "..."
-        env = Burn::Util::Os.new
         directory File.dirname(__FILE__) + "/tools/#{env.os_name}", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
         
         # Finally compile
