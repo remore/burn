@@ -33,7 +33,7 @@ module Burn
     end
 
     desc "make <filename>", "Compile and build application binary from Burn DSL file"
-    option :preview, :type => :boolean, :aliases => '-p', :desc => "Preview .out application right after compilation"
+    option :preview, :type => :boolean, :aliases => '-p', :desc => "Preview .nes application right after compilation"
     option :debug, :type => :string, :aliases => '-d', :desc => "Debug mode"
     option :verbose, :type => :boolean, :desc => "Print logs as much as possible", :default => false
     option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
@@ -201,7 +201,7 @@ EOS
     option :verbose, :type => :boolean, :desc => "Print logs as much as possible", :default => false
     option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
     def play(mainfile=nil)
-      mainfile="main.out" if mainfile.nil?
+      mainfile="main.nes" if mainfile.nil?
       env = Burn::Util::Os.new
       
       # boot up webrick httpserver to download emulator script
