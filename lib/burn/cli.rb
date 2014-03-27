@@ -62,7 +62,7 @@ EOS
         #directory File.dirname(__FILE__) + "/workspace_default", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
         Burn::Util::Unpack.new.unpack "#{File.dirname(__FILE__)}/tools/workspace_default.tar.gz", "#{@workspace_root}/tmp/burn"
         
-        # compile and build .out
+        # compile and build .nes
         say "."
         builder = Builder.new(@workspace_root)
         builder.verbose options[:verbose]
@@ -103,11 +103,11 @@ EOS
             .gsub(/__@__TITLE__@__/, mainfile)
             .gsub(/__@__ROMDATA__@__/,
               Base64::strict_encode64(
-                File.binread("#{@workspace_root}/tmp/burn/main.out")
+                File.binread("#{@workspace_root}/tmp/burn/main.nes")
               )
             )
         )
-        copy_file "#{@workspace_root}/tmp/burn/main.out", "#{@workspace_root}/tmp/burn/release/js/main.out", :verbose => options[:verbose]
+        copy_file "#{@workspace_root}/tmp/burn/main.nes", "#{@workspace_root}/tmp/burn/release/js/main.nes", :verbose => options[:verbose]
         
         # used a icon from noun project. Thanks Jenny!
         # http://thenounproject.com/term/fire/24187/
