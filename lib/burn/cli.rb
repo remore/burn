@@ -29,6 +29,7 @@ module Burn
         copy_file "#{base_path}/src/ca65/ca65", "#{base_path}/#{env.os_name}/cc65/bin/ca65", :force => true
         copy_file "#{base_path}/src/ld65/ld65", "#{base_path}/#{env.os_name}/cc65/bin/ld65", :force => true
       end
+      say "successfully finished. you've got ready to burn."
     end
 
     desc "make <filename>", "Compile and build application binary from Burn DSL file"
@@ -37,12 +38,76 @@ module Burn
     option :verbose, :type => :boolean, :desc => "Print logs as much as possible", :default => false
     option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
     def make(mainfile=nil)
+      env = Burn::Util::Os.new
       mainfile="main.rb" if mainfile.nil?
       
       if !File.exist?(mainfile) then
         help
       
+      elsif !File.exist?("#{File.dirname(__FILE__)}/tools/#{env.os_name}/cc65/bin/ld65#{".exe" if env.is_win?}") then
+        say <<-EOS
+[ERROR] you are not ready to burn, most probably you haven't execute burn init command yet.
+to fix this, try the following command:
+
+    sudo burn init
+
+EOS
+      
       else
+        
+        # init
+        say "running burn v#{VERSION}..."
+        remove_dir "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
+        empty_directory "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
+        #directory File.dirname(__FILE__) + "/workspace_default", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
+        Burn::Util::Unpack.new.unpack "#{File.dirname(__FILE__)}/tools/workspace_default.tar.gz", "#{@workspace_root}/tmp/burn"
+        
+        # compile and build .out
+        say "."
+        builder = Builder.new(@workspace_root)
+        builder.verbose options[:verbose]
+        builder.load File.read("#{@workspace_root}/#{mainfile}")
+        builder.generate
+        
+        # Prepare compilers
+        say ".."
+        directory File.dirname(__FILE__) + "/tools/#{env.os_name}", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
+        
+        # Finally compile
+        say "..."
+        redirect = ""
+        if env.is_win? then
+          command = ""
+          ext = "bat"
+          redirect = " > nul" if !options[:verbose]
+          
+        else
+          command = "/bin/bash "
+          ext = "sh"
+          redirect = " > /dev/null" if !options[:verbose]
+          
+          # Set permissions to execute compilers
+          Dir::glob("#{@workspace_root}/tmp/burn/cc65/bin/*65").each do |f|
+            File.chmod(0777, f)
+          end
+          
+        end
+        run "#{command}#{@workspace_root}/tmp/burn/scripts/compile.#{ext} #{@workspace_root}/tmp/burn #{redirect}", :verbose => options[:verbose]
+        
+        # prepare customized emulator
+        say "...."
+        require 'base64'
+        File.write(
+          "#{@workspace_root}/tmp/burn/release/js/emulator.html", 
+          File.read("#{@workspace_root}/tmp/burn/release/js/emulator.html")
+            .gsub(/__@__TITLE__@__/, mainfile)
+            .gsub(/__@__ROMDATA__@__/,
+              Base64::strict_encode64(
+                File.binread("#{@workspace_root}/tmp/burn/main.out")
+              )
+            )
+        )
+        copy_file "#{@workspace_root}/tmp/burn/main.out", "#{@workspace_root}/tmp/burn/release/js/main.out", :verbose => options[:verbose]
         
         # used a icon from noun project. Thanks Jenny!
         # http://thenounproject.com/term/fire/24187/
@@ -98,66 +163,28 @@ module Burn
                      `-/oo:                                     
                                                                 
                                                                 
+
+
+Successfully burned. Congratulations!
+
+The executable is available at:
+
+    #{@workspace_root}/tmp/burn/main.nes
+
 EOS
-        # init
-        say "."
-        remove_dir "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
-        empty_directory "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
-        #directory File.dirname(__FILE__) + "/workspace_default", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
-        Burn::Util::Unpack.new.unpack "#{File.dirname(__FILE__)}/tools/workspace_default.tar.gz", "#{@workspace_root}/tmp/burn"
-        
-        # compile and build .out
-        say ".."
-        builder = Builder.new(@workspace_root)
-        builder.verbose options[:verbose]
-        builder.load File.read("#{@workspace_root}/#{mainfile}")
-        builder.generate
-        
-        # Prepare compilers
-        say "..."
-        env = Burn::Util::Os.new
-        directory File.dirname(__FILE__) + "/tools/#{env.os_name}", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
-        
-        # Finally compile
-        say "...."
-        redirect = ""
-        if env.is_win? then
-          command = ""
-          ext = "bat"
-          redirect = " > nul" if !options[:verbose]
-          
-        else
-          command = "/bin/bash "
-          ext = "sh"
-          redirect = " > /dev/null" if !options[:verbose]
-          
-          # Set permissions to execute compilers
-          Dir::glob("#{@workspace_root}/tmp/burn/cc65/bin/*65").each do |f|
-            File.chmod(0777, f)
-          end
-          
-        end
-        run "#{command}#{@workspace_root}/tmp/burn/scripts/compile.#{ext} #{@workspace_root}/tmp/burn #{redirect}", :verbose => options[:verbose]
-        
-        # prepare customized emulator
-        say "....."
-        require 'base64'
-        File.write(
-          "#{@workspace_root}/tmp/burn/release/js/emulator.html", 
-          File.read("#{@workspace_root}/tmp/burn/release/js/emulator.html")
-            .gsub(/__@__TITLE__@__/, mainfile)
-            .gsub(/__@__ROMDATA__@__/,
-              Base64::strict_encode64(
-                File.binread("#{@workspace_root}/tmp/burn/main.out")
-              )
-            )
-        )
-        copy_file "#{@workspace_root}/tmp/burn/main.out", "#{@workspace_root}/tmp/burn/release/js/main.out", :verbose => options[:verbose]
-        
-        say "Burned."
         
         # run simulator
-        play if options[:preview]
+        if options[:preview] then
+          play
+        else
+          say <<-EOS
+try following command to play the app:
+
+    burn play
+
+EOS
+
+        end
       end
     end
     
@@ -170,6 +197,9 @@ EOS
     end
     
     desc "play <file>", "Invoke application simulator."
+    option :debug, :type => :string, :aliases => '-d', :desc => "Debug mode"
+    option :verbose, :type => :boolean, :desc => "Print logs as much as possible", :default => false
+    option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
     def play(mainfile=nil)
       mainfile="main.out" if mainfile.nil?
       env = Burn::Util::Os.new
