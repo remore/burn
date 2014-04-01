@@ -1,4 +1,4 @@
-# Burn - a handy toolkit to make .nes application from a Ruby DSL(human readable text file)
+# Burn - a handy toolkit to make .nes application from a Ruby DSL
 
 Burn is a free and open source framework that allows you to create 8-bit flavored application(.nes) using Ruby DSL.
 
