@@ -157,6 +157,10 @@ Currently following DSL Methods are available. If you are newbie here, kindly vi
 
 ### Scene
 
+Scene resource is key object for burn to create any kind of application. This is where you design screen and write your code about key input from key controller.
+
+Let's take a quick look how we can make 8-bit flavored application without hassle.
+
 #### label(string, x=0, y=1)
 
 The label method can be used in a scene to display static string.
@@ -176,6 +180,8 @@ scene do
   label "Hello, World!", 4, 5
 end
 ```
+
+![label pic](http://k.swd.cc/burn/resource/screenshot/label.png)
 
 #### fade_in, fade_out
 
@@ -294,9 +300,11 @@ The color method can be used in a scene to pick a color and set it to specific p
 ```ruby
 scene do
   label "Hello, World!"
-  color :text, :pink, :darker
+  color :text, :green, :lighter
 end
 ```
+
+![color pic](http://k.swd.cc/burn/resource/screenshot/color.png)
 
 #### wait(interval)
 
@@ -448,18 +456,152 @@ scene "title" do
 end
 ```
 
+### Declare
+
+Declare resource is essential part of programming with using Scene#main_loop.
+
+If you give Number as shown below, then method name like #frame or #color_flag becomes variable in Scene#main_loop process.
+
+```ruby
+declare do
+  frame 0
+  color_flag 0
+end
+```
+
+If you give String conststs of 8x8 character block just like following example code, then left left-hand member becomes sprite object in Scene#main_loop process.
+
+```ruby
+declare do
+  tile <<-EOH
+11111111
+11222211
+11233211
+11233211
+11233211
+11233211
+11222211
+11111111
+EOH
+end
+```
+
+### Music
+
+This is where burn rubygem compose music for you. The only requirement for you to start to compose music is your favorite text editor.
+
+Music resource can accept only two methods so far, #tempo and #channel.
+
+#### tempo(speed)
+
+The tempo method in a music can be used to set a tempo of a song.
+
+<dl>
+  <dt>speed Symbol</dt>
+  <dd>song speed symbol to set.
+    <table>
+      <tr>
+        <th>Song Speed</th>
+      </tr>
+      <tr><td>:presto</td></tr>
+      <tr><td>:allegro</td></tr>
+      <tr><td>:moderato</td></tr>
+      <tr><td>:andante</td></tr>
+      <tr><td>:adagio</td></tr>
+      <tr><td>:largo</td></tr>
+    </table>
+  </dd>
+</dl>
+
+```ruby
+music "fanfare" do
+  tempo :allegro
+  channel ...
+end
+```
+
+#### channel(instrument)
+
+The channel method in a music can be used to set a channel of the song. Maximum three channels per music can be set.
+
+<dl>
+  <dt>instrument String</dt>
+  <dd>instrument to play.
+    <table>
+      <tr>
+        <th>Instrument</th>
+      </tr>
+      <tr><td>"bass"</td></tr>
+      <tr><td>"piano"</td></tr>
+      <tr><td>"string"</td></tr>
+      <tr><td>"arpeggio"</td></tr>
+      <tr><td>"step"</td></tr>
+      <tr><td>"bell"</td></tr>
+      <tr><td>"acoustic"</td></tr>
+      <tr><td>"guitar"</td></tr>
+      <tr><td>"theremin"</td></tr>
+    </table>
+  </dd>
+</dl>
+
+Notes of the music are described as shown below. 
+
+- Total 61 notes(5 octaves + rest) notes are available.
+-- For instance, available methods are, `#c0`(0 stands for octave), `#ds0`(s stands for flat), `#d0`, `#es0`...
+- `#segno` and `#dal_segno` are available too
+-- This way you can repeat song
+- Each note can take length as their parameter. Here is list of length available
+-- `:sixteenth`, `:eighth`, `:quarter`, `:half`
+-- `:dotted_sixteenth`, `:dotted_eighth`, `:dotted_quarter`, `:dotted_half`
+-- `:triplet_sixteenth`, `:triplet_eighth`, `:triplet_quarter`, `:triplet_half`
+- Each note can take expression parameter as well
+-- `:tenuto`
+-- `:accent`
+-- `:staccato`
+
+With these basic understanding how you can compose song, here is an example of music.
+
+```ruby
+music "sarabande" do
+  tempo :allegro
+  channel "string" do
+    segno
+    d2   :eighth
+    rest :eighth
+    e2   :eighth
+    rest :eighth
+    dal_segno
+  end
+  channel "piano" do
+    segno
+    a3   :dotted_eighth
+    rest :sixteenth
+    g3   :triplet_eighth
+    g3   :triplet_eighth
+    g3   :triplet_eighth
+    dal_segno
+  end
+end
+```
+
 ### Sound
 
-#### duty_cycle(ratio)
+Sound resource can accept only #effect method as of now. Available methods for #effect are shown below.
+
+#### effect
+
+with this block, you can call following method to configure sound setting.
+
+#### 
 
 The duty_cycle method in a sound can be used to set duty cycle type.
 
 <dl>
-  <dt>ratio Symbol</dt>
+  <dt>duty_cycle(ratio)</dt>
   <dd>duty cycle symbol to set. It takes :higher by default.
     <table>
       <tr>
-        <th>duty cycle type</th>
+        <th>Duty Cycle Type</th>
         <th>Value</th>
       </tr>
       <tr>
@@ -480,93 +622,29 @@ The duty_cycle method in a sound can be used to set duty cycle type.
       </tr>
     </table>
   </dd>
+  <dt>velocity(level)</dt>
+  <dd>Volume level number of the sound, between 0 and 15. It takes 7 by default.</dd>
+  <dt>envelope_decay(flag), envelope_decay_loop(flag), length_counter_clock(flag)</dt>
+  <dd>It takes either :enable or :disable flag symbol. Disabled by default.</dd>
+  <dt>length(size)</dt>
+  <dd>Length number of the sound effect, between 1 and 254. It takes 16 by default.</dd>
+  <dt>pitch(control)</dt>
+  <dd>Control number of the sound effect, between 0 and 254. (This value is stil uncontrollable so far. Need to improve)</dd>
 </dl>
 
 ```ruby
 sound "attack" do
   effect do
-    duty_cycle :higher
-  end
-end
-```
-
-#### velocity(level)
-
-The velocity method in a sound can be used to set volume level of the sound.
-
-<dl>
-  <dt>level Number</dt>
-  <dd>Volume level of the sound, between 0 and 15. It takes 7 by default.</dd>
-</dl>
-
-```ruby
-sound "attack" do
-  effect do
-    velocity 12
-  end
-end
-```
-
-#### envelope_decay(flag), envelope_decay_loop(flag), length_counter_clock(flag)
-
-The envelope_decay/envelope_decay_loop/length_counter_clock method in a sound can be used to switch their setting.
-
-<dl>
-  <dt>flag Symbol</dt>
-  <dd>It takes either :enable or :disable symbol. Disabled by default.</dd>
-</dl>
-
-```ruby
-sound "attack" do
-  effect do
-    envelope_decay :enable
+    duty_cycle 
+    velocity 15
+    envelope_decay :disable
+    length 10
+    pitch 200
     envelope_decay_loop :disable
     length_counter_clock :disable
   end
 end
 ```
-
-#### length(size)
-
-The length method in a sound can be used to set length of the sound effect.
-
-<dl>
-  <dt>size Number</dt>
-  <dd>Length of the sound effect, between 1 and 254. It takes 16 by default.</dd>
-</dl>
-
-```ruby
-sound "attack" do
-  effect do
-    length 22
-  end
-end
-```
-
-#### pitch(control)
-
-The pitch method in a sound can be used to control pitch of the sound effect.
-
-<dl>
-  <dt>control Number</dt>
-  <dd>Control of the sound effect, between 0 and 254. (This value is stil uncontrollable so far. Need to improve)</dd>
-</dl>
-
-```ruby
-sound "attack" do
-  effect do
-    pitch 100
-  end
-end
-```
-
-### Music
-
-TBD
-
-### Declare
-
-TBD
 
 ## Burning Fuel DSL In Action
 
