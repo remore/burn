@@ -143,7 +143,7 @@ Customize example/shooting/main.rb and play with it if you please.
     burn
     burn make
      
-    # you can boot the emulator up whenever you want
+    # you can boot the emulator up whenever you want(without burning Fuel DSL)
     burn play
 
 ## Fuel DSL Methods
@@ -456,7 +456,7 @@ The duty_cycle method in a sound can be used to set duty cycle type.
 
 <dl>
   <dt>ratio Symbol</dt>
-  <dd>duty cycle type to set.
+  <dd>duty cycle symbol to set. It takes :higher by default.
     <table>
       <tr>
         <th>duty cycle type</th>
@@ -482,11 +482,83 @@ The duty_cycle method in a sound can be used to set duty cycle type.
   </dd>
 </dl>
 
+```ruby
+sound "attack" do
+  effect do
+    duty_cycle :higher
+  end
+end
+```
+
 #### velocity(level)
 
 The velocity method in a sound can be used to set volume level of the sound.
 
-TBD
+<dl>
+  <dt>level Number</dt>
+  <dd>Volume level of the sound, between 0 and 15. It takes 7 by default.</dd>
+</dl>
+
+```ruby
+sound "attack" do
+  effect do
+    velocity 12
+  end
+end
+```
+
+#### envelope_decay(flag), envelope_decay_loop(flag), length_counter_clock(flag)
+
+The envelope_decay/envelope_decay_loop/length_counter_clock method in a sound can be used to switch their setting.
+
+<dl>
+  <dt>flag Symbol</dt>
+  <dd>It takes either :enable or :disable symbol. Disabled by default.</dd>
+</dl>
+
+```ruby
+sound "attack" do
+  effect do
+    envelope_decay :enable
+    envelope_decay_loop :disable
+    length_counter_clock :disable
+  end
+end
+```
+
+#### length(size)
+
+The length method in a sound can be used to set length of the sound effect.
+
+<dl>
+  <dt>size Number</dt>
+  <dd>Length of the sound effect, between 1 and 254. It takes 16 by default.</dd>
+</dl>
+
+```ruby
+sound "attack" do
+  effect do
+    length 22
+  end
+end
+```
+
+#### pitch(control)
+
+The pitch method in a sound can be used to control pitch of the sound effect.
+
+<dl>
+  <dt>control Number</dt>
+  <dd>Control of the sound effect, between 0 and 254. (This value is stil uncontrollable so far. Need to improve)</dd>
+</dl>
+
+```ruby
+sound "attack" do
+  effect do
+    pitch 100
+  end
+end
+```
 
 ### Music
 
