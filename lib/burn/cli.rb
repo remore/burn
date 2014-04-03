@@ -49,7 +49,7 @@ module Burn
 [ERROR] you are not ready to burn, most probably you haven't execute burn init command yet.
 to fix this, try the following command:
 
-    sudo burn init
+    #{"sudo " if !env.is_win?}burn init
 
 EOS
       
@@ -101,6 +101,9 @@ EOS
           "#{@workspace_root}/tmp/burn/release/js/emulator.html", 
           File.read("#{@workspace_root}/tmp/burn/release/js/emulator.html")
             .gsub(/__@__TITLE__@__/, mainfile)
+            .gsub(/__@__AUTHOR__@__/, "anonymous")
+            .gsub(/__@__CREATED__@__/, Time.new.to_s)
+            .gsub(/__@__ROM__@__/, mainfile)
             .gsub(/__@__ROMDATA__@__/,
               Base64::strict_encode64(
                 File.binread("#{@workspace_root}/tmp/burn/main.nes")
