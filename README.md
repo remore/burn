@@ -131,13 +131,20 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
     burn -p
     ls tmp/burn/ | grep main.nes
 
-### More Example
+### More Examples
 
-Customize example/shooting/main.rb and try out if you please.
+Customize example/shooting/main.rb and play with it if you please.
 
     git clone https://github.com/remore/burn.git
     cd burn/example/shooting
     burn -p -c
+     
+    # if you'd like to make executable, simply remove -p option or type burn make
+    burn
+    burn make
+     
+    # you can boot the emulator up whenever you want
+    burn play
 
 ## Fuel DSL Methods
 
