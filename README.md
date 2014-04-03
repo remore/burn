@@ -125,19 +125,19 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 
 ### Quick Start
 
+`burn -p` command use Firefox primarily. If you'd like to use chrome, type `burn -p -c` instead.
+
     echo "scene {label 'hello world'}" > main.rb
     burn -p
     ls tmp/burn/ | grep main.nes
 
-`burn -p` command use Firefox primarily. If you'd like to use chrome, type `burn -p -c` instead.
-
 ### More Example
+
+Customize example/shooting/main.rb and try out if you please.
 
     git clone https://github.com/remore/burn.git
     cd burn/example/shooting
     burn -p -c
-
-`vi main.rb` and customize this simple shooting game if you please.
 
 ## Fuel DSL Methods
 
