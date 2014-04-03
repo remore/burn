@@ -146,9 +146,9 @@ Customize example/shooting/main.rb and play with it if you please.
     # you can boot the emulator up whenever you want(without burning Fuel DSL)
     burn play
 
-## Fuel DSL Methods
+## Fuel DSL
 
-Currently following DSL Methods are available. If you are newbie here, kindly visit [project page](http://k.swd.cc/burn/) first to see what you can do with Burn and Fuel DSL.
+Currently following 4 resources are available. Let's take a quick look how we can make 8-bit flavored application without hassle.
 
 * [Scene](#scene)
 * [Sound](#sound)
@@ -157,9 +157,7 @@ Currently following DSL Methods are available. If you are newbie here, kindly vi
 
 ### Scene
 
-Scene resource is key object for burn to create any kind of application. This is where you design screen and write your code about key input from key controller.
-
-Let's take a quick look how we can make 8-bit flavored application without hassle.
+Scene resource is a key concept to make any kind of application. This is where you design screen transition, controller event binding and game balance design etc etc..
 
 #### label(string, x=0, y=1)
 
@@ -547,17 +545,17 @@ The channel method in a music can be used to set a channel of the song. Maximum 
 Notes of the music are described as shown below. 
 
 - Total 61 notes(5 octaves + rest) notes are available.
--- For instance, available methods are, `#c0`(0 stands for octave), `#ds0`(s stands for flat), `#d0`, `#es0`...
+    - For instance, available methods are, `#c0`(0 stands for octave), `#ds0`(s stands for flat), `#d0`, `#es0`...
 - `#segno` and `#dal_segno` are available too
--- This way you can repeat song
+    - This way you can repeat song
 - Each note can take length as their parameter. Here is list of length available
--- `:sixteenth`, `:eighth`, `:quarter`, `:half`
--- `:dotted_sixteenth`, `:dotted_eighth`, `:dotted_quarter`, `:dotted_half`
--- `:triplet_sixteenth`, `:triplet_eighth`, `:triplet_quarter`, `:triplet_half`
+    - `:sixteenth`, `:eighth`, `:quarter`, `:half`
+    - `:dotted_sixteenth`, `:dotted_eighth`, `:dotted_quarter`, `:dotted_half`
+    - `:triplet_sixteenth`, `:triplet_eighth`, `:triplet_quarter`, `:triplet_half`
 - Each note can take expression parameter as well
--- `:tenuto`
--- `:accent`
--- `:staccato`
+    - `:tenuto`
+    - `:accent`
+    - `:staccato`
 
 With these basic understanding how you can compose song, here is an example of music.
 
