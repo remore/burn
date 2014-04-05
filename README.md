@@ -109,7 +109,7 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 
 - translate ruby DSL file into c source code
 - compile them to make executable(*.nes) by calling cc65
-- provide emulator(JSNES) for rpaid application development
+- provide emulator(JSNES) for rapid application development
 
 ### Requirements
 
