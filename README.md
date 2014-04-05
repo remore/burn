@@ -654,8 +654,10 @@ TBD(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
 
 ### Helpful Folks
 
-* Shiru - this project had never been born if I had not found [this article](http://shiru.untergrund.net/articles/programming_nes_games_in_c.htm)
+* Shiru - This project had never been born if I had not found [this article](http://shiru.untergrund.net/articles/programming_nes_games_in_c.htm)
 * My friend from high school - I appreciate him for sending me fine-grained reviews as always
+* @josbrahol sent me a great pull request which contains many grammatical errors
+* @kdb424 sent me a pull request to fix a typo
 
 ### License
 
