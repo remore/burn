@@ -1,4 +1,4 @@
-# Burn - a handy toolkit to make .nes application from Ruby DSL
+# Burn - a handy toolkit to make a .nes application from a Ruby DSL
 
 Burn is a free and open source framework that allows you to create 8-bit flavored application(.nes) using a Ruby DSL.
 
@@ -8,7 +8,7 @@ scene do
 end
 ```
 
-Just like Recipe and Cookbook are DSLs for Chef rubygem, this dead simple DSL is for the Burn rubygem, and we call it Fuel. Burning this Fuel will produce [this](http://k.swd.cc/burn/resource/example/hello-world/emulator.html).
+Just like Recipe and Cookbook are DSLs for the Chef rubygem, this dead simple DSL is for the Burn rubygem, and we call it Fuel. Burning this Fuel will produce [this](http://k.swd.cc/burn/resource/example/hello-world/emulator.html).
 
 ![Hello-world pic](http://k.swd.cc/burn/resource/screenshot/hello-world.png)
 
@@ -33,7 +33,7 @@ music "openning" do
 end
 ```
 
-Check [the output](http://k.swd.cc/burn/resource/example/hello-world-with-music/emulator.html) from this. 
+Check [the output](http://k.swd.cc/burn/resource/example/hello-world-with-music/emulator.html) from this.
 
 Would you like to design retro 8-bit graphics? Here you go.
 
@@ -101,11 +101,11 @@ Please visit [our project page](http://k.swd.cc/burn/) for more examples.
 
 Creating 8-bit flavored applications are a good fit for rapid prototyping, as well as, for possible educational purposee.
 
-Moreover, the executables built with burn will work on [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles). Burn is a multi-platform programming environment.
+Moreover, the executables built with Burn will work on [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles). Burn is a multi-platform programming environment.
 
 ### How It Works
 
-Internally, burn contains cc65 executables inside its gemfile and calls them to compile. The main workflow is as follows.
+Internally, Burn contains cc65 executables inside its gemfile and calls them to compile. The main workflow is as follows.
 
 - translate ruby DSL file into c source code
 - compile them to make executable(*.nes) by calling cc65
@@ -486,7 +486,7 @@ end
 
 ### Music
 
-This is where the burn rubygem composes music for you. The only requirement for you to start to compose music is your favorite text editor.
+This is where the Burn rubygem composes music for you. The only requirement for you to start to compose music is your favorite text editor.
 
 Music resource can accept only two methods so far, #tempo and #channel.
 
@@ -674,6 +674,6 @@ GPLv3
 * Improvement of Internal Architecture
     * make cc65 alternative in Ruby
 * Other Feature To Be Supported
-    * make burn rubygem work with mruby(not soon)
+    * make Burn rubygem work with mruby(not soon)
 * Fix bugs
     * declaring 2x2 pattern works, however 2x1 pattern doesn't
