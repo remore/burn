@@ -35,7 +35,7 @@ end
 
 Check [the output](http://k.swd.cc/burn/resource/example/hello-world-with-music/emulator.html) from this.
 
-Would you like to design retro 8-bit graphics? Here you go.
+Would you like to design retro 8-bit graphics? Here you go!
 
 ```ruby
 declare do
@@ -99,9 +99,9 @@ Please visit [our project page](http://k.swd.cc/burn/) for more examples.
 
 ### Less Is More
 
-Creating 8-bit flavored applications are a good fit for rapid prototyping, as well as, for possible educational purposee.
+Creating 8-bit flavored applications are a good fit for rapid prototyping, as well as, for possible educational purposes.
 
-Moreover, the executables built with Burn will work on [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles). Burn is a multi-platform programming environment.
+Moreover, the executables built with Burn will work on [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles)! Burn is a multi-platform programming environment.
 
 ### How It Works
 
@@ -148,7 +148,7 @@ Customize example/shooting/main.rb and play with it if you please.
 
 ## Fuel DSL
 
-Currently the following four resources are available. Let's take a quick look how we can make an 8-bit flavored application without hassle.
+Currently the following four resources are available. Let's take a quick look how we can make an 8-bit flavored application without hassle!
 
 * [Scene](#scene)
 * [Sound](#sound)
