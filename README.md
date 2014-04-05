@@ -1,6 +1,6 @@
-# Burn - a handy toolkit to make .nes application from Ruby DSL
+# Burn - a handy toolkit to make a .nes application from a Ruby DSL
 
-Burn is a free and open source framework that allows you to create 8-bit flavored application(.nes) using Ruby DSL.
+Burn is a free and open source framework that allows you to create 8-bit flavored application(.nes) using a Ruby DSL.
 
 ```ruby
 scene do
@@ -8,11 +8,11 @@ scene do
 end
 ```
 
-Just like Recipe and Cookbook are DSL for Chef rubygem, this dead simple DSL is for Burn rubygem, and we call it Fuel. Burning this Fuel will produce [this](http://k.swd.cc/burn/resource/example/hello-world/emulator.html).
+Just like Recipe and Cookbook are DSLs for the Chef rubygem, this dead simple DSL is for the Burn rubygem, and we call it Fuel. Burning this Fuel will produce [this](http://k.swd.cc/burn/resource/example/hello-world/emulator.html).
 
 ![Hello-world pic](http://k.swd.cc/burn/resource/screenshot/hello-world.png)
 
-Here is another example. With Fuel DSL, you can even compose background music in seconds.
+Here is another example. With the Fuel DSL, you can even compose background music in seconds!
 
 ```ruby
 scene do
@@ -33,9 +33,9 @@ music "openning" do
 end
 ```
 
-Check [the output](http://k.swd.cc/burn/resource/example/hello-world-with-music/emulator.html) from this. 
+Check [the output](http://k.swd.cc/burn/resource/example/hello-world-with-music/emulator.html) from this.
 
-Would you like to design retro 8-bit graphics? Here you go.
+Would you like to design retro 8-bit graphics? Here you go!
 
 ```ruby
 declare do
@@ -71,7 +71,7 @@ end
 
 ![star animated gif](http://k.swd.cc/burn/resource/screenshot/star.gif)
 
-Please visit [our project page](http://k.swd.cc/burn/) for more example.
+Please visit [our project page](http://k.swd.cc/burn/) for more examples.
 
 ## Table Of Contents
 
@@ -99,22 +99,22 @@ Please visit [our project page](http://k.swd.cc/burn/) for more example.
 
 ### Less Is More
 
-Creating 8-bit flavored application mean neither outdated nor cheap, but good fit to rapid prototyping. It could be one of best options for education purpose as well.
+Creating 8-bit flavored applications are a good fit for rapid prototyping, as well as, for possible educational purposes.
 
-Moreover, the executables built with burn will work at [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles). That said, consequently, burn is a multi-platform programming environment.
+Moreover, the executables built with Burn will work on [almost any OS](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles)! Burn is a multi-platform programming environment.
 
 ### How It Works
 
-Internally, burn contains cc65 executables inside its gemfile and calls them to compile. Main workflow is as follows.
+Internally, Burn contains cc65 executables inside its gemfile and calls them to compile. The main workflow is as follows.
 
 - translate ruby DSL file into c source code
 - compile them to make executable(*.nes) by calling cc65
-- provide emulator(JSNES) for rapid application development
+- provide an emulator(JSNES) for rapid application development
 
 ### Requirements
 
 - Ruby1.9.1+
-- gcc(for windows user this is not required)
+- gcc (Winows users do not require this)
 
 ## Getting Started
 
@@ -125,7 +125,7 @@ Internally, burn contains cc65 executables inside its gemfile and calls them to 
 
 ### Quick Start
 
-`burn -p` command use Firefox primarily. If you'd like to use chrome, type `burn -p -c` instead.
+Use the `burn -p` command to use Firefox primarily. If you'd like to use Chrome, type `burn -p -c` instead.
 
     echo "scene {label 'hello world'}" > main.rb
     burn -p
@@ -138,17 +138,17 @@ Customize example/shooting/main.rb and play with it if you please.
     git clone https://github.com/remore/burn.git
     cd burn/example/shooting
     burn -p -c
-     
+
     # if you'd like to make executable, simply remove -p option or type burn make
     burn
     burn make
-     
     # you can boot the emulator up whenever you want(without burning Fuel DSL)
+
     burn play
 
 ## Fuel DSL
 
-Currently following 4 resources are available. Let's take a quick look how we can make 8-bit flavored application without hassle.
+Currently the following four resources are available. Let's take a quick look how we can make an 8-bit flavored application without hassle!
 
 * [Scene](#scene)
 * [Sound](#sound)
@@ -161,7 +161,7 @@ Scene resource is a key concept to make any kind of application. This is where y
 
 #### label(string, x=0, y=1)
 
-The label method can be used in a scene to display static string.
+The label method can be used in a scene to display a static string.
 
 <dl>
   <dt>string String</dt>
@@ -306,7 +306,7 @@ end
 
 #### wait(interval)
 
-The wait method can be used in a scene to pause for certain period of time.
+The wait method can be used in a scene to pause for a certain period of time.
 
 <dl>
   <dt>interval Fixnum</dt>
@@ -325,11 +325,11 @@ end
 
 #### goto(scene_name)
 
-The goto method can be used in a scene to jump the scene specified.
+The goto method can be used in a scene to jump to the scene specified.
 
 <dl>
   <dt>scene_name String</dt>
-  <dd>Destination to jump.</dd>
+  <dd>Jump destination.</dd>
 </dl>
 
 ```ruby
@@ -345,7 +345,7 @@ end
 
 #### inline(code)
 
-The inline method can be used in a scene to inject c source code manually to compile with cc65. Should be used for debugging purpose.
+The inline method can be used in a scene to manually inject C source code to compile with cc65 (should be used for debugging purposes).
 
 <dl>
   <dt>code String</dt>
@@ -393,7 +393,7 @@ end
 
 #### sound(effect_name)
 
-The sound method in a scene can be used to play sound effect.
+The sound method in a scene can be used to play sound effects.
 
 <dl>
   <dt>effect_name String</dt>
@@ -416,13 +416,13 @@ end
 
 #### paint(dest, palette)
 
-The paint method in a scene can be used to associate color palette with pattern designs inflated on the screen. Typically #paint is called along with #color and #screen method.
+The paint method in a scene can be used to associate a color palette with pattern designs inflated on the screen. Typically #paint is called along with #color and #screen method.
 
 <dl>
   <dt>dest Range</dt>
   <dd>Return value of #range(x_from, y_from, x_to, y_to) is expected. x_from and x_to takes the number between 0 and 255 while y_from and y_to takes the value between 0 and 239.</dd>
   <dt>palette Symbol</dt>
-  <dd>Palette symbol to apply. Kindly refer candidate symbols listed at <a href="#colorpalette-color-lightnesslighter">color</a> section.</dd>
+  <dd>Palette symbol to apply. Kindly refer to the candidate symbols listed at <a href="#colorpalette-color-lightnesslighter">color</a> section.</dd>
 </dl>
 
 ```ruby
@@ -456,9 +456,9 @@ end
 
 ### Declare
 
-Declare resource is essential part of programming with using Scene#main_loop.
+Declare resource is an essential part of programming with using Scene#main_loop.
 
-If you give Number as shown below, then method name like #frame or #color_flag becomes variable in Scene#main_loop process.
+If you give Number as shown below, then a method name like #frame or #color_flag, it becomes variable in Scene#main_loop process.
 
 ```ruby
 declare do
@@ -467,7 +467,7 @@ declare do
 end
 ```
 
-If you give String conststs of 8x8 character block just like following example code, then left left-hand member becomes sprite object in Scene#main_loop process.
+If you give String constants as 8x8 character blocks, like the following example code, then the left-hand member becomes a sprite object in the Scene#main_loop process.
 
 ```ruby
 declare do
@@ -486,13 +486,13 @@ end
 
 ### Music
 
-This is where burn rubygem compose music for you. The only requirement for you to start to compose music is your favorite text editor.
+This is where the Burn rubygem composes music for you. The only requirement for you to start to compose music is your favorite text editor.
 
 Music resource can accept only two methods so far, #tempo and #channel.
 
 #### tempo(speed)
 
-The tempo method in a music can be used to set a tempo of a song.
+The tempo method in music can be used to set the tempo of a song.
 
 <dl>
   <dt>speed Symbol</dt>
@@ -520,7 +520,7 @@ end
 
 #### channel(instrument)
 
-The channel method in a music can be used to set a channel of the song. Maximum three channels per music can be set.
+The channel method in music can be used to set a channel of the song. Maximum of three channels per music can be set.
 
 <dl>
   <dt>instrument String</dt>
@@ -542,22 +542,22 @@ The channel method in a music can be used to set a channel of the song. Maximum 
   </dd>
 </dl>
 
-Notes of the music are described as shown below. 
+Notes of the music are described as shown below.
 
 - Total 61 notes(5 octaves + rest) notes are available.
     - For instance, available methods are, `#c0`(0 stands for octave), `#ds0`(s stands for flat), `#d0`, `#es0`...
 - `#segno` and `#dal_segno` are available too
-    - This way you can repeat song
+    - This way you can repeat a song
 - Each note can take length as their parameter. Here is list of length available
     - `:sixteenth`, `:eighth`, `:quarter`, `:half`
     - `:dotted_sixteenth`, `:dotted_eighth`, `:dotted_quarter`, `:dotted_half`
     - `:triplet_sixteenth`, `:triplet_eighth`, `:triplet_quarter`, `:triplet_half`
-- Each note can take expression parameter as well
+- Each note can take an expression parameter as well
     - `:tenuto`
     - `:accent`
     - `:staccato`
 
-With these basic understanding how you can compose song, here is an example of music.
+Understanding the above will allow you to easily make music. Here is some example music.
 
 ```ruby
 music "sarabande" do
@@ -584,15 +584,15 @@ end
 
 ### Sound
 
-Sound resource can accept only #effect method as of now. Available methods for #effect are shown below.
+Sound resource can only accept the #effect method as of now. Available methods for #effect are shown below.
 
 #### effect
 
-with this block, you can call following method to configure sound setting.
+with this block, you can call the following method to configure sound settings.
 
-#### 
+####
 
-The duty_cycle method in a sound can be used to set duty cycle type.
+The duty_cycle method in a sound can be used to set the duty cycle type.
 
 <dl>
   <dt>duty_cycle(ratio)</dt>
@@ -633,7 +633,7 @@ The duty_cycle method in a sound can be used to set duty cycle type.
 ```ruby
 sound "attack" do
   effect do
-    duty_cycle 
+    duty_cycle
     velocity 15
     envelope_decay :disable
     length 10
@@ -655,7 +655,7 @@ TBD(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
 ### Helpful Folks
 
 * Shiru - this project had never been born if I had not found [this article](http://shiru.untergrund.net/articles/programming_nes_games_in_c.htm)
-* My friend from high school - I appreciate him for sending me fine-grained review as always
+* My friend from high school - I appreciate him for sending me fine-grained reviews as always
 
 ### License
 
@@ -674,6 +674,6 @@ GPLv3
 * Improvement of Internal Architecture
     * make cc65 alternative in Ruby
 * Other Feature To Be Supported
-    * make burn rubygem work with mruby(not soon)
+    * make Burn rubygem work with mruby(not soon)
 * Fix bugs
     * declaring 2x2 pattern works, however 2x1 pattern doesn't
