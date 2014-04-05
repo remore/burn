@@ -12,7 +12,7 @@ Just like Recipe and Cookbook are DSLs for the Chef rubygem, this dead simple DS
 
 ![Hello-world pic](http://k.swd.cc/burn/resource/screenshot/hello-world.png)
 
-Here is another example. With the Fuel DSL, you can even compose background music in seconds.
+Here is another example. With the Fuel DSL, you can even compose background music in seconds!
 
 ```ruby
 scene do
