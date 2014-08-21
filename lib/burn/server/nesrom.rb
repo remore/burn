@@ -1,6 +1,6 @@
 module Burn
-  module Util
-    class Server
+  module Server
+    class Nesrom
       require 'webrick'
       
       def initialize(document_root)

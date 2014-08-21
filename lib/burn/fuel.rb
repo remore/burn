@@ -1,0 +1,11 @@
+require 'burn/fuel/dsl_base'
+require 'burn/fuel/nesrom/sound_effect'
+require 'burn/fuel/nesrom/note'
+require 'burn/fuel/nesrom/channel_stream'
+require 'burn/fuel/nesrom/declare'
+require 'burn/fuel/nesrom/sound'
+require 'burn/fuel/nesrom/music'
+require 'burn/fuel/nesrom/scene'
+
+require 'burn/fuel/telnet/declare'
+require 'burn/fuel/telnet/scene'

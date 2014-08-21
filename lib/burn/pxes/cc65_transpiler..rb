@@ -1,14 +1,6 @@
 module Burn
-  module Util
-    class Pxes
-      include Debug
-      attr_reader :sexp
-      
-      def initialize(sexp, context=nil, resource_name=nil)
-        @sexp = sexp
-        @context = context || self
-        @resource_name = resource_name
-      end
+  module Pxes
+    class Cc65Transpiler < TranspilerBase
       
       def to_c
         parse_sexp(@sexp)
@@ -27,9 +19,10 @@ module Burn
       #  end
       #end
       
+      
       def invoke_dsl_processing(exp)
-        generator = Generator::CSource.new(self)
-        Dsl::Scene.new(@resource_name, generator).instance_eval exp
+        generator = Generator::Nesrom::CSource.new(self)
+        Fuel::Nesrom::Scene.new(@resource_name, generator).instance_eval exp
         # return the result
         @context.instance_exec(generator.global) do |generator_global|
           @global.concat generator_global
@@ -100,14 +93,14 @@ module Burn
             
           # this is why you can't use pre-defined dsl name as a variable name. e.g) you are not allowed to declare variables like show or label or stop. these all are defined dsl.
           when :vcall 
-            if !Dsl::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
+            if !Fuel::Nesrom::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
               invoke_dsl_processing parse_sexp(s[1])
             else
               parse_sexp(s[1])
             end
             
           when :command
-            if !Dsl::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
+            if !Fuel::Nesrom::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
               #invoke_dsl_processing parse_sexp(s[1]) + "(" + parse_sexp( replace_vcall_to_symbol(s[2]) ) + ")"
               invoke_dsl_processing parse_sexp(s[1]) + "(" + parse_sexp( s[2] ) + ")"
             else
@@ -175,6 +168,7 @@ module Burn
           log s[0].class.to_s
         end
       end
+      
     end
   end
 end

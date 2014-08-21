@@ -18,12 +18,12 @@ module Burn
     option :verbose, :type => :boolean, :desc => "Print logs as much as possible", :default => false
     option :quick, :type=>:boolean, :desc=>"Make cc65 binaries available without gcc(however unstable. This option is not recommended.)"
     def init
-      env = Burn::Util::Os.new
+      env = Util::Os.new
       base_path = "#{File.dirname(__FILE__)}/tools"
       remove_dir base_path+ "/"+env.os_name, :verbose => options[:verbose]
-      Burn::Util::Unpack.new.unpack "#{base_path}/#{env.os_name}.tar.gz", base_path
+      Util::Unpack.new.unpack "#{base_path}/#{env.os_name}.tar.gz", base_path
       if !env.is_win? && !options[:quick] then
-        Burn::Util::Unpack.new.unpack "#{base_path}/src.tar.gz", base_path
+        Util::Unpack.new.unpack "#{base_path}/src.tar.gz", base_path
         run "/bin/bash #{File.dirname(__FILE__)}/tools/make_exec.sh #{base_path}"
         copy_file "#{base_path}/src/cc65/cc65", "#{base_path}/#{env.os_name}/cc65/bin/cc65", :force => true
         copy_file "#{base_path}/src/ca65/ca65", "#{base_path}/#{env.os_name}/cc65/bin/ca65", :force => true
@@ -38,7 +38,7 @@ module Burn
     option :verbose, :type => :boolean, :desc => "Print logs as much as possible", :default => false
     option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
     def make(mainfile=nil)
-      env = Burn::Util::Os.new
+      env = Util::Os.new
       mainfile="main.rb" if mainfile.nil?
       
       if !File.exist?(mainfile) then
@@ -60,11 +60,11 @@ EOS
         remove_dir "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
         empty_directory "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
         #directory File.dirname(__FILE__) + "/workspace_default", "#{@workspace_root}/tmp/burn", :verbose => options[:verbose]
-        Burn::Util::Unpack.new.unpack "#{File.dirname(__FILE__)}/tools/workspace_default.tar.gz", "#{@workspace_root}/tmp/burn"
+        Util::Unpack.new.unpack "#{File.dirname(__FILE__)}/tools/workspace_default.tar.gz", "#{@workspace_root}/tmp/burn"
         
         # compile and build .nes
         say "."
-        builder = Builder.new(@workspace_root)
+        builder = Generator::NesromBuilder.new(@workspace_root)
         builder.verbose options[:verbose]
         builder.load File.read("#{@workspace_root}/#{mainfile}")
         builder.generate
@@ -195,7 +195,7 @@ EOS
     option :debug, :type => :string, :aliases => '-d', :desc => "Debug mode"
     def server(document_root=nil)
       raise Exception.new("document_root must be specified when you would like to run http server") if document_root.nil?
-      server = Burn::Util::Server.new(document_root)
+      server = Util::Server::Nesrom.new(document_root)
       server.start
     end
     
@@ -205,7 +205,7 @@ EOS
     option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
     def play(mainfile=nil)
       mainfile="main.nes" if mainfile.nil?
-      env = Burn::Util::Os.new
+      env = Util::Os.new
       
       # boot up webrick httpserver to download emulator script
       command = "ruby " + File.dirname(__FILE__) + "/../../bin/burn server #{@workspace_root}/tmp/burn/release/js/ " + (options[:debug] ? "-d" : "")
