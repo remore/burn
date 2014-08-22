@@ -20,7 +20,7 @@ module Burn
         end
         
         def method_missing(method_symbol, *args, &block)
-          puts :method_symbol=>method_symbol, :args=>args, :block=>block
+          log :method_symbol=>method_symbol, :args=>args, :block=>block
           if method_symbol == :scene then
             # preprocess
             args[0] = "main" if args[0].nil?

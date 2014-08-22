@@ -7,7 +7,8 @@ module Burn
         @height = 24
         @frame_rate = :high
         @user_input = :enable
-        @log = :disable
+        @verbose = false
+        @debug = false
       end
     end
   end

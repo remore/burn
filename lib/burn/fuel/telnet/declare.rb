@@ -31,7 +31,6 @@ module Burn
               
             else
               @opcodes << "@___#{key} = #{value}"
-              puts :key=>key, :value=>value.to_s(16), :value_class=>value.class
             end
           }
 

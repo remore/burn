@@ -2,6 +2,7 @@ module Burn
   module Generator
     module Telnet
       class Screen
+        include Debug
         ESC = 27.chr # equal to "\033"
         CLEARSCREEN = ESC + "[2J"
         JUMPTOHOME = ESC + "[H"
@@ -30,13 +31,11 @@ module Burn
         end
         
         def is_pressed(key, user_input)
-          puts " ** COOK! PROG=" + key.to_s
+          log " ** program is waiting for:" + key.to_s
           if !user_input.nil? then
-            puts " **** COOOOOKKK!! USER=" + user_input.class.to_s
-            puts " **** COOOOOKKK!! USER=" + user_input.chr
-            puts " **** COOOOOKKK!! USER=" + user_input.to_s
+            log " **** confiremd user input:" + user_input.class.to_s, user_input.chr, user_input.to_s
             if [*'0'..'9', *'a'..'z', *'A'..'Z'].include?(user_input.chr) && key.to_s == user_input.chr then
-              puts ":: 1 ::::::::::::::::::::::::::::::::::::::------:"
+              log "****** is_pressed() returned true"
               true
             end
           end

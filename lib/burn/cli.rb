@@ -33,20 +33,21 @@ EOS
     end
     
     desc "fire", "Create your application and Run them instantly"
+    option :chrome, :type => :boolean, :aliases => '-c',  :desc => "[NESROM mode only] Run emulator on chrome instead of firefox", :default => false
+    option :preview, :type => :boolean, :aliases => '-p',  :desc => "[NESROM mode only] Preview mode. By this, you can skip burning fuel DSL and focus on playing nesrom.", :default => false
     option :nesrom_server, :type => :boolean, :default => false,  :desc=>"[NOT FOR USER] Run simple http server for emulator"
     def fire(mainfile=nil)
       mainfile="main.rb" if mainfile.nil?
-      
-      @conf = Configuration::Loader.new(File.read("#{@workspace_root}/#{mainfile}"))
+      load_conf_and_options(mainfile)
       if options[:nesrom_server] then
         server "#{@workspace_root}/tmp/burn/release/js/"
         
       else
         if @conf.app.terminal==:nesrom then
-          make mainfile
+          make_and_play mainfile, options[:preview]
           
         elsif @conf.app.terminal==:telnet then
-          say "telnet!"
+          say "starting telnet server #{@conf.server.ip_addr}:#{@conf.server.port}...."
           Server::Telnet.new(File.read("#{@workspace_root}/#{mainfile}"), @conf).start
         end
       end
@@ -67,9 +68,7 @@ EOS
     
     no_tasks do
       
-      desc "make <filename>", "Compile and build application binary from Burn DSL file"
-      option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
-      def make(mainfile=nil, preview=true)
+      def make_and_play(mainfile=nil, preview=true)
         mainfile="main.rb" if mainfile.nil?
         
         if !File.exist?(mainfile) then
@@ -85,65 +84,67 @@ to fix this, try the following command:
 EOS
         
         else
-          app_root = "#{@workspace_root}/tmp/burn"
-          
-          # init
-          say "running burn v#{VERSION}..."
-          remove_dir app_root, :verbose => options[:verbose]
-          empty_directory app_root, :verbose => options[:verbose]
-          Util::Unpack.new.unpack "#{File.dirname(__FILE__)}/tools/workspace_default.tar.gz", app_root
-          
-          # compile and build .nes
-          say "."
-          builder = Generator::NesromBuilder.new(@workspace_root)
-          builder.verbose options[:verbose]
-          builder.load File.read("#{@workspace_root}/#{mainfile}")
-          builder.generate
-          
-          # Prepare compilers
-          say ".."
-          directory File.dirname(__FILE__) + "/tools/#{@os.name}", app_root, :verbose => options[:verbose]
-          
-          # Finally compile
-          say "..."
-          redirect = ""
-          if @os.is_win? then
-            command = ""
-            ext = "bat"
-            redirect = " > nul" if !options[:verbose]
+          _v = @conf.app.verbose
+          if !preview then
+            app_root = "#{@workspace_root}/tmp/burn"
             
-          else
-            command = "/bin/bash "
-            ext = "sh"
-            redirect = " > /dev/null" if !options[:verbose]
+            # init
+            say "running burn v#{VERSION}..."
+            remove_dir app_root, :verbose => _v
+            empty_directory app_root, :verbose => _v
+            Util::Unpack.new.unpack "#{File.dirname(__FILE__)}/tools/workspace_default.tar.gz", app_root
             
-            # Set permissions to execute compilers
-            Dir::glob("#{app_root}/cc65/bin/*65").each do |f|
-              File.chmod(0777, f)
+            # compile and build .nes
+            say "."
+            builder = Generator::NesromBuilder.new(@workspace_root)
+            builder.verbose _v
+            builder.load File.read("#{@workspace_root}/#{mainfile}")
+            builder.generate
+            
+            # Prepare compilers
+            say ".."
+            directory File.dirname(__FILE__) + "/tools/#{@os.name}", app_root, :verbose => _v
+            
+            # Finally compile
+            say "..."
+            redirect = ""
+            if @os.is_win? then
+              command = ""
+              ext = "bat"
+              redirect = " > nul" if !_v
+              
+            else
+              command = "/bin/bash "
+              ext = "sh"
+              redirect = " > /dev/null" if !_v
+              
+              # Set permissions to execute compilers
+              Dir::glob("#{app_root}/cc65/bin/*65").each do |f|
+                File.chmod(0777, f)
+              end
+              
             end
+            run "#{command}#{app_root}/scripts/compile.#{ext} #{app_root} #{redirect}", :verbose => _v
             
-          end
-          run "#{command}#{app_root}/scripts/compile.#{ext} #{app_root} #{redirect}", :verbose => options[:verbose]
-          
-          # prepare customized emulator
-          say "...."
-          require 'base64'
-          File.write(
-            "#{app_root}/release/js/emulator.html", 
-            File.read("#{app_root}/release/js/emulator.html")
-              .gsub(/__@__TITLE__@__/, mainfile)
-              .gsub(/__@__AUTHOR__@__/, "anonymous")
-              .gsub(/__@__CREATED__@__/, Time.new.to_s)
-              .gsub(/__@__ROM__@__/, mainfile)
-              .gsub(/__@__ROMDATA__@__/,
-                Base64::strict_encode64(
-                  File.binread("#{app_root}/main.nes")
+            # prepare customized emulator
+            say "...."
+            require 'base64'
+            File.write(
+              "#{app_root}/release/js/emulator.html", 
+              File.read("#{app_root}/release/js/emulator.html")
+                .gsub(/__@__TITLE__@__/, mainfile)
+                .gsub(/__@__AUTHOR__@__/, "anonymous")
+                .gsub(/__@__CREATED__@__/, Time.new.to_s)
+                .gsub(/__@__ROM__@__/, mainfile)
+                .gsub(/__@__ROMDATA__@__/,
+                  Base64::strict_encode64(
+                    File.binread("#{app_root}/main.nes")
+                  )
                 )
-              )
-          )
-          copy_file "#{app_root}/main.nes", "#{app_root}/release/js/main.nes", :verbose => options[:verbose]
-          
-          say <<-EOS
+            )
+            copy_file "#{app_root}/main.nes", "#{app_root}/release/js/main.nes", :verbose => _v
+            
+            say <<-EOS
 
 
 Successfully burned. Congratulations!
@@ -153,19 +154,33 @@ The executable is available at:
     #{app_root}/main.nes
 
 EOS
-          
-          # run simulator
-          if preview then
-            play
-          else
-            say <<-EOS
-try following command to play the app:
-
-      burn play
-
-EOS
-
+            
           end
+          
+          # boot up webrick httpserver to download emulator script
+          command = "ruby " + File.dirname(__FILE__) + "/../../bin/burn --nesrom-server " + (options[:debug] ? "-d" : "")
+          if @os.is_win? then
+            run "start #{command}", :verbose => _v
+          else
+            run "#{command} &", :verbose => _v
+          end
+          
+          # wait for certain period of time to prevent browser from fetching game url too early
+          # *DEFINITELY* TO BE REFACTORED
+          sleep 1
+          
+          # open up browser
+          uri = "http://127.0.0.1:17890/emulator.html"
+          browser = options[:chrome] ? "chrome" : "firefox"
+          if @os.is_win? then
+            run "start #{browser} #{uri}", :verbose => _v
+          elsif @os.is_mac? then
+            browser = "\"/Applications/Google Chrome.app\"" if options[:chrome]
+            run "open -a #{browser} #{uri}", :verbose => _v
+          else
+            run "/usr/bin/#{browser} #{uri}", :verbose => _v
+          end
+          
         end
       end
       
@@ -176,35 +191,12 @@ EOS
         server.start
       end
       
-      desc "play <file>", "Invoke application simulator."
-      option :chrome, :type => :boolean, :aliases => '-c',  :desc => "Run emulator on chrome instead of firefox", :default => false
-      def play(mainfile=nil)
-        mainfile="main.nes" if mainfile.nil?
-        
-        # boot up webrick httpserver to download emulator script
-        command = "ruby " + File.dirname(__FILE__) + "/../../bin/burn --nesrom-server " + (options[:debug] ? "-d" : "")
-        if @os.is_win? then
-          run "start #{command}", :verbose => options[:verbose]
-        else
-          run "#{command} &", :verbose => options[:verbose]
-        end
-        
-        # wait for certain period of time to prevent browser from fetching game url too early
-        # *DEFINITELY* TO BE REFACTORED
-        sleep 1
-        
-        # open up browser
-        uri = "http://127.0.0.1:17890/emulator.html"
-        browser = options[:chrome] ? "chrome" : "firefox"
-        if @os.is_win? then
-          run "start #{browser} #{uri}", :verbose => options[:verbose]
-        elsif @os.is_mac? then
-          browser = "\"/Applications/Google Chrome.app\"" if options[:chrome]
-          run "open -a #{browser} #{uri}", :verbose => options[:verbose]
-        else
-          run "/usr/bin/#{browser} #{uri}", :verbose => options[:verbose]
-        end
+      def load_conf_and_options(mainfile)
+        @conf = Configuration::Loader.new(File.read("#{@workspace_root}/#{mainfile}"))
+        @conf.app.debug options[:debug]
+        @conf.app.verbose options[:verbose]
       end
+      
     end
     
   end

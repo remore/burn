@@ -2,26 +2,37 @@ module Burn
   module Server
     class Telnet
       require 'eventmachine'
+      include Debug
       
       def initialize(fuel, conf)
         @@op = nil
         @@screen_buffer = nil
-        @@vm = Generator::TelnetVm.new(fuel, conf)
         @@conf = conf
+        @fuel = fuel
+        verbose conf.app.verbose
       end
       
       def self.vm
         @@vm
       end
       
+      def self.op(receive=nil)
+        if receive.nil? then
+          @@op
+        else
+          @@op = receive
+        end
+      end
+      
       class Messenger < EM::Connection
+        include Debug
         @@channel = EM::Channel.new
         
         def post_init
-          puts "-- someone connected"
+          log "-- someone connected"
           @sid = @@channel.subscribe { |data| send_data data }
-          puts @sid
-          puts "Connection num is !!!" + EM::connection_count.to_s # Here is the point to mange NUMBER OF CLIENTS(USERS) (related to max_clients settings)
+          log @sid
+          log "Connection num is !!!" + EM::connection_count.to_s # Here is the point to mange NUMBER OF CLIENTS(USERS) (related to max_clients settings)
           # display current screen for newly connected user
           @@channel.push Telnet.vm.screen.to_terminal
         end
@@ -29,15 +40,16 @@ module Burn
         def receive_data(data)
           #@@channel.push data
           #puts data # only shown in server's terminal
-          @@op = proc do
+          receive = proc do
             #"user=#{@sid} typed [" + data + "]"
             Telnet.vm.interrupt data.ord
-            puts "...ord=#{data.ord},#{data}"
+            log "...ord=#{data.ord},#{data}"
           end
+          Telnet.op receive
         end
 
         def unbind
-          puts "-- someone(#{@sid}) disconnected from the server"
+          log "-- someone(#{@sid}) disconnected from the server"
           @@channel.unsubscribe(@sid)
         end
         
@@ -47,13 +59,15 @@ module Burn
       end
       
       def start
+        @@vm = Generator::TelnetVm.new(@fuel, @@conf)
+        
         EM::run do
           EM::start_server(@@conf.server.ip_addr, @@conf.server.port, Messenger)
           
           # view
           EM::add_periodic_timer(frame_rate) do
             if @@vm.screen.to_terminal != @@screen_buffer then
-              puts "@ @ @ @ @ @   @   @  screen is updated!"
+              log "both screen and @screen_buffer is updated!"
               Messenger.publish @@vm.screen.to_terminal
               @@screen_buffer = @@vm.screen.to_terminal
             end
@@ -72,6 +86,7 @@ module Burn
           
           #EM::set_quantum 10
         end
+        
       end
       
       private
@@ -83,6 +98,10 @@ module Burn
         when :slow then 1.0
         else 0.5
         end
+      end
+      
+      def verbose(flag)
+        Debug::Logger.new.enabled flag
       end
       
     end
