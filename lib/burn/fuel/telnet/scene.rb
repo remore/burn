@@ -2,33 +2,33 @@ module Burn
   module Fuel
     module Telnet
       class Scene < DslBase
-          # Where to draw
-          BG = 40          # background palette (0x00-0x0f)
-          TEXT = 30        # background palette (0x00-0x0f)
-          # SPRITE = 17     # sprite palette (0x10-0x1f)
-          
-          # Color Control
-          WHITE = 7
-          LIGHTBLUE = 4
-          BLUE = 4
-          PURPLE = 5
-          PINK = 5
-          RED = 1
-          DEEPRED = 1
-          ORANGE = 3
-          LIGHTORANGE = 3
-          DARKGREEN = 2
-          GREEN = 2
-          LIGHTGREEN = 6
-          BLUEGREEN = 6
-          GRAY = 7
-          BLACK = 0
-          
-          # Light Control
-          DARKEST = 60
-          DARKER = 60
-          LIGHTER = 0
-          LIGHTEST = 0
+        # Where to draw
+        BG = 40          # background palette (0x00-0x0f)
+        TEXT = 30        # background palette (0x00-0x0f)
+        # SPRITE = 17     # sprite palette (0x10-0x1f)
+        
+        # Color Control
+        WHITE = 7
+        LIGHTBLUE = 4
+        BLUE = 4
+        PURPLE = 5
+        PINK = 5
+        RED = 1
+        DEEPRED = 1
+        ORANGE = 3
+        LIGHTORANGE = 3
+        DARKGREEN = 2
+        GREEN = 2
+        LIGHTGREEN = 6
+        BLUEGREEN = 6
+        GRAY = 7
+        BLACK = 0
+        
+        # Light Control
+        DARKEST = 60
+        DARKER = 60
+        LIGHTER = 0
+        LIGHTEST = 0
 
         def initialize(resource_name, context)
           super(resource_name, context)
@@ -52,9 +52,9 @@ module Burn
         
         def color(palette, color, lightness=:lighter)
           target = palette==:bg ? "bg" : "fg"
-          palette=Opcode.const_get(palette.upcase)
-          color=Opcode.const_get(color.upcase)
-          lightness=Opcode.const_get(lightness.upcase)
+          palette=Scene.const_get(palette.upcase)
+          color=Scene.const_get(color.upcase)
+          lightness=Scene.const_get(lightness.upcase)
           @context.instance_exec { @opcodes << "@screen.#{target}_color = #{palette+color+lightness}" }
         end
         
@@ -63,7 +63,7 @@ module Burn
             p=Pxes::CrubyTranspiler.new(Ripper.sexp(rrb_source),c,resource)
             start_label = "##{resource}-main_loop:" + @opcodes.count.to_s
             @opcodes << start_label
-            @opcodes.concat p.to_c.split("\n")
+            @opcodes.concat p.to_rb.split("\n")
             @opcodes << "@user_input = nil"
             @opcodes << "@pc = @opcodes.index(\"#{start_label}\")" #JUMP
           end

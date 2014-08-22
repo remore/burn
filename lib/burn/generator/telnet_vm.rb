@@ -1,17 +1,17 @@
 module Burn
   module Generator
     class TelnetVm
-      include Fuel::Telnet
       include Generator::Telnet
       attr_reader :screen
       attr_accessor :wait
       
-      def initialize(source)
+      def initialize(source, conf)
         @pc = 0 # Program Counter
-        @screen = Screen.new
+        @screen = Screen.new(conf)
         @wait = 10
         @opcodes = JitCompiler.new.compile(source) # compiled methods
         @user_input = nil
+        @conf = conf
       end
       
       def next_frame
@@ -32,8 +32,7 @@ module Burn
       end
       
       def interrupt(signal)
-        #@screen[0] = " #{signal}"
-        @user_input = signal
+        @user_input = signal if @conf.app.user_input ==:enable
       end
       
     end

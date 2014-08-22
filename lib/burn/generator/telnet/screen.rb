@@ -9,9 +9,10 @@ module Burn
         
         attr_accessor :display, :fg_color, :bg_color
         
-        def initialize
+        def initialize(conf)
           @fg_color = 33
           @bg_color = 42
+          @conf = conf
           flush_screen
         end
         
@@ -21,7 +22,7 @@ module Burn
         
         def flush_screen
           @display = Array.new
-          13.times{ @display << Array.new(67){' '}.join }
+          @conf.app.height.times{ @display << Array.new(@conf.app.width){' '}.join }
         end
         
         def escape_color(num)

@@ -2,6 +2,8 @@ module Burn
   module Generator
     module Telnet
       class JitCompiler
+        include Fuel::Telnet
+        include Debug
         attr_reader :opcodes
         
         def initialize
@@ -25,7 +27,7 @@ module Burn
             
             # execute dsls
             @opcodes << "##{args[0]}"
-            Opcode.new(args[0], self).instance_eval(&block)
+            Scene.new(args[0], self).instance_eval(&block)
             @opcodes << "#END"
             
           elsif method_symbol == :declare then

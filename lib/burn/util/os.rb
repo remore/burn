@@ -23,7 +23,7 @@ module Burn
         false
       end
       
-      def os_name
+      def name
         if is_win? then
           "win"
         elsif is_mac? then
