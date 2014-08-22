@@ -1,2 +1,2 @@
-require 'burn/server/nesrom'
+require 'burn/server/rom'
 require 'burn/server/telnet'

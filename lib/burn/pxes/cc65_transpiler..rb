@@ -21,8 +21,8 @@ module Burn
       
       
       def invoke_dsl_processing(exp)
-        generator = Generator::Nesrom::CSource.new(self)
-        Fuel::Nesrom::Scene.new(@resource_name, generator).instance_eval exp
+        generator = Generator::Rom::CSource.new(self)
+        Fuel::Rom::Scene.new(@resource_name, generator).instance_eval exp
         # return the result
         @context.instance_exec(generator.global) do |generator_global|
           @global.concat generator_global
@@ -93,14 +93,14 @@ module Burn
             
           # this is why you can't use pre-defined dsl name as a variable name. e.g) you are not allowed to declare variables like show or label or stop. these all are defined dsl.
           when :vcall 
-            if !Fuel::Nesrom::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
+            if !Fuel::Rom::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
               invoke_dsl_processing parse_sexp(s[1])
             else
               parse_sexp(s[1])
             end
             
           when :command
-            if !Fuel::Nesrom::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
+            if !Fuel::Rom::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
               #invoke_dsl_processing parse_sexp(s[1]) + "(" + parse_sexp( replace_vcall_to_symbol(s[2]) ) + ")"
               invoke_dsl_processing parse_sexp(s[1]) + "(" + parse_sexp( s[2] ) + ")"
             else

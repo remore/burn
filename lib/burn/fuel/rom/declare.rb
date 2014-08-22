@@ -1,6 +1,6 @@
 module Burn
   module Fuel
-    module Nesrom
+    module Rom
       class Declare < Fuel::DslBase
           
         def initialize(resource_name, context)

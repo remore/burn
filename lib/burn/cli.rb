@@ -33,17 +33,17 @@ EOS
     end
     
     desc "fire", "Create your application and Run them instantly"
-    option :chrome, :type => :boolean, :aliases => '-c',  :desc => "[NESROM mode only] Run emulator on chrome instead of firefox", :default => false
-    option :preview, :type => :boolean, :aliases => '-p',  :desc => "[NESROM mode only] Preview mode. By this, you can skip burning fuel DSL and focus on playing nesrom.", :default => false
-    option :nesrom_server, :type => :boolean, :default => false,  :desc=>"[NOT FOR USER] Run simple http server for emulator"
+    option :chrome, :type => :boolean, :aliases => '-c',  :desc => "[ROM mode only] Run emulator on chrome instead of firefox", :default => false
+    option :preview, :type => :boolean, :aliases => '-p',  :desc => "[ROM mode only] Preview mode. By this, you can skip burning fuel DSL and focus on playing rom.", :default => false
+    option :rom_server, :type => :boolean, :desc=>"[NOT FOR USER] Run simple http server for emulator", :default => false
     def fire(mainfile=nil)
       mainfile="main.rb" if mainfile.nil?
       load_conf_and_options(mainfile)
-      if options[:nesrom_server] then
-        server "#{@workspace_root}/tmp/burn/release/js/"
+      if options[:rom_server] then
+        server "#{@workspace_root}/tmp/burn/release/js/", mainfile
         
       else
-        if @conf.app.terminal==:nesrom then
+        if @conf.app.terminal==:rom then
           make_and_play mainfile, options[:preview]
           
         elsif @conf.app.terminal==:telnet then
@@ -96,7 +96,7 @@ EOS
             
             # compile and build .nes
             say "."
-            builder = Generator::NesromBuilder.new(@workspace_root)
+            builder = Generator::RomBuilder.new(@workspace_root)
             builder.verbose _v
             builder.load File.read("#{@workspace_root}/#{mainfile}")
             builder.generate
@@ -158,7 +158,7 @@ EOS
           end
           
           # boot up webrick httpserver to download emulator script
-          command = "ruby " + File.dirname(__FILE__) + "/../../bin/burn --nesrom-server " + (options[:debug] ? "-d" : "")
+          command = "ruby " + File.dirname(__FILE__) + "/../../bin/burn fire #{mainfile} --rom-server " + (options[:debug] ? "-d" : "")
           if @os.is_win? then
             run "start #{command}", :verbose => _v
           else
@@ -167,10 +167,11 @@ EOS
           
           # wait for certain period of time to prevent browser from fetching game url too early
           # *DEFINITELY* TO BE REFACTORED
+          # maybe better to use :StartCallback of WEBRICK?
           sleep 1
           
           # open up browser
-          uri = "http://127.0.0.1:17890/emulator.html"
+          uri = "http://#{@conf.server.ip_addr}:#{@conf.server.port}/emulator.html"
           browser = options[:chrome] ? "chrome" : "firefox"
           if @os.is_win? then
             run "start #{browser} #{uri}", :verbose => _v
@@ -185,9 +186,9 @@ EOS
       end
       
       desc "server <document_root>", "Run simple http server for emulator. This is mainly used by burn rubygem itself, not by user."
-      def server(document_root=nil)
+      def server(document_root=nil, mainfile)
         raise Exception.new("document_root must be specified when you would like to run http server") if document_root.nil?
-        server = Server::Nesrom.new(document_root)
+        server = Server::Rom.new(document_root,@conf)
         server.start
       end
       

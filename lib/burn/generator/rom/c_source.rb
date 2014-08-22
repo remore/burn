@@ -1,6 +1,6 @@
 module Burn
   module Generator
-    module Nesrom
+    module Rom
       class CSource
         include Debug
         attr_reader :global, :code_blocks

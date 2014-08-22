@@ -1,6 +1,6 @@
 module Burn
   module Generator
-    module Nesrom
+    module Rom
       class AssemblyMusic
         include Debug
         

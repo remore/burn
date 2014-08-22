@@ -1,7 +1,7 @@
-require 'burn/generator/nesrom/assembly_sound_effect'
-require 'burn/generator/nesrom/assembly_music'
-require 'burn/generator/nesrom/c_source'
-require 'burn/generator/nesrom_builder'
+require 'burn/generator/rom/assembly_sound_effect'
+require 'burn/generator/rom/assembly_music'
+require 'burn/generator/rom/c_source'
+require 'burn/generator/rom_builder'
 
 require 'burn/generator/telnet/screen'
 require 'burn/generator/telnet/jit_compiler'

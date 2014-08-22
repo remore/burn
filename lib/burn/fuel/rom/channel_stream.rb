@@ -1,6 +1,6 @@
 module Burn
   module Fuel
-    module Nesrom
+    module Rom
       class ChannelStream
         # tempo 193 ~ 211 (18 levels, 202 is median)
         # see: http://ja.wikipedia.org/wiki/%E6%BC%94%E5%A5%8F%E8%A8%98%E5%8F%B7

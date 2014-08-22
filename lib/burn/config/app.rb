@@ -2,7 +2,7 @@ module Burn
   module Configuration
     class App < ConfigBase
       def initialize
-        @terminal = :nesrom
+        @terminal = :rom
         @width = 80
         @height = 24
         @frame_rate = :high

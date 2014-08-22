@@ -1,6 +1,6 @@
 module Burn
   module Fuel
-    module Nesrom
+    module Rom
       class Note
         # For music
         # (0..59 are octaves 1-5, 63 note stop)

@@ -1,8 +1,8 @@
 module Burn
   module Generator
-    class NesromBuilder
-      include Fuel::Nesrom
-      include Generator::Nesrom
+    class RomBuilder
+      include Fuel::Rom
+      include Generator::Rom
       include Debug
       
       def initialize(workspace_root)

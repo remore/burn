@@ -1,6 +1,6 @@
 module Burn
   module Fuel
-    module Nesrom
+    module Rom
       class SoundEffect
         # duty cycle: 00：12.5%　01：25%　10：50%　11：75%
         LOWEST = 0

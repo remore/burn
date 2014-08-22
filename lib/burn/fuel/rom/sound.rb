@@ -1,6 +1,6 @@
 module Burn
   module Fuel
-    module Nesrom
+    module Rom
       class Sound < DslBase
         def initialize(resource_name, context)
           super(resource_name, context)

@@ -1,6 +1,6 @@
 module Burn
   module Fuel
-    module Nesrom
+    module Rom
       class Scene < DslBase
         # Where to draw
         BG = 0          # background palette (0x00-0x0f)
