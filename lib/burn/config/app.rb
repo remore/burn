@@ -6,7 +6,7 @@ module Burn
         @width = 80
         @height = 24
         @frame_rate = :high
-        @user_input = :enable
+        @user_input = :disable
         @verbose = false
         @debug = false
       end

@@ -36,7 +36,7 @@ module Burn
             log " **** confiremd user input:" + user_input.class.to_s, user_input.chr, user_input.to_s
             if [*'0'..'9', *'a'..'z', *'A'..'Z'].include?(user_input.chr) && key.to_s == user_input.chr then
               log "****** is_pressed() returned true"
-              true
+              return true
             end
           end
           false
