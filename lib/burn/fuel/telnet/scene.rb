@@ -47,7 +47,7 @@ module Burn
         end
         
         def goto(scene_name)
-          @context.instance_exec { @opcodes << "@pc = @opcodes.index(\"##{scene_name}\")" }
+          @context.instance_exec { @opcodes << "@screen.flush_screen && @pc = @opcodes.index(\"##{scene_name}\")" }
         end
         
         def color(palette, color, lightness=:lighter)

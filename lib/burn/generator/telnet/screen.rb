@@ -7,18 +7,27 @@ module Burn
         CLEARSCREEN = ESC + "[2J"
         JUMPTOHOME = ESC + "[H"
         RESETALLATTR = ESC + "[0m"
+        CRLF = 13.chr + 10.chr
         
         attr_accessor :display, :fg_color, :bg_color
         
         def initialize(conf)
-          @fg_color = 33
-          @bg_color = 42
+          @fg_color = 37
+          @bg_color = 40
           @conf = conf
           flush_screen
         end
         
         def to_terminal
-          CLEARSCREEN + escape_color(@fg_color) + escape_color(@bg_color) + @display.join("\r\n") + JUMPTOHOME + RESETALLATTR
+          #CLEARSCREEN + escape_color(@fg_color) + escape_color(@bg_color) + @display.join("\r\n") + JUMPTOHOME + RESETALLATTR
+          #JUMPTOHOME + RESETALLATTR + CLEARSCREEN + escape_color(@fg_color) + escape_color(@bg_color) + @display.join("\r\n") + ESC + "[#{@conf.app.height};2H" + RESETALLATTR
+          #CLEARSCREEN + escape_color(@fg_color) + escape_color(@bg_color) + @display.join("\r\n") + ESC + "[#{@conf.app.height};2H" + RESETALLATTR
+          #JUMPTOHOME + crlf + crlf + crlf + crlf + crlf + crlf + @display.join(crlf)
+          #JUMPTOHOME + crlf + crlf + crlf + crlf + crlf + crlf + @display.join(crlf) + crlf
+          #JUMPTOHOME + @display.join(CRLF) + CRLF
+          
+          JUMPTOHOME +  escape_color(@fg_color) + escape_color(@bg_color) + @display.join(CRLF) + CRLF + RESETALLATTR
+          #JUMPTOHOME + @display.join(CRLF) + CRLF
         end
         
         def flush_screen
@@ -27,7 +36,7 @@ module Burn
         end
         
         def escape_color(num)
-          ESC + "[" + num.to_s + "m"
+          ESC + "[" + num.to_s + ";1m"
         end
         
         def is_pressed(key, user_input)
