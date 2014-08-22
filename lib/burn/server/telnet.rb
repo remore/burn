@@ -24,17 +24,25 @@ module Burn
         end
       end
       
+      def self.conf
+        @@conf
+      end
+      
       class Messenger < EM::Connection
         include Debug
         @@channel = EM::Channel.new
         
         def post_init
-          log "-- someone connected"
-          @sid = @@channel.subscribe { |data| send_data data }
-          log @sid
-          log "Connection num is !!!" + EM::connection_count.to_s # Here is the point to mange NUMBER OF CLIENTS(USERS) (related to max_clients settings)
-          # display current screen for newly connected user
-          @@channel.push Telnet.vm.screen.to_terminal
+          if EM::connection_count <= Telnet.conf.server.max_clients then
+            log "-- someone connected"
+            @sid = @@channel.subscribe { |data| send_data data }
+            log @sid
+            # display current screen for newly connected user
+            @@channel.push Telnet.vm.screen.to_terminal
+          else
+            send_data "Burn telnet server refused to establish connection, since there is no remaining connection slots. Please try later."
+            close_connection true
+          end
         end
 
         def receive_data(data)
@@ -56,6 +64,7 @@ module Burn
         def self.publish(message)
           @@channel.push message
         end
+        
       end
       
       def start
