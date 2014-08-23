@@ -12,23 +12,7 @@ module Burn
             key=args.shift
             value=args.shift
             if value.is_a?(String) then
-  #
-  #            no support for sprite string
-  #
-  #            patternizer = Burn::Util::Patternizer.new(value)
-  #            
-  #            struct_var = "static sprite_schema #{key}={0, 0, {"
-  #            @pattern_table_index[key.to_sym] = @pattern_table_pointer
-  #            patternizer.patterns.each_with_index do |p, i|
-  #              log p, i, patternizer.height, "aaaaaaaaaaaaaaaaaaa"
-  #              struct_var += sprintf("%d, %d, %#x, 0,", (i % patternizer.width)*8 , (i / (patternizer.patterns.size / patternizer.height) )*8 , @pattern_table_pointer)
-  #              @pattern_tables << p
-  #              @pattern_table_pointer+=1
-  #            end
-  #            struct_var += "128}};"
-  #            
-  #            @global.push sprintf(struct_var, "")
-              
+              @opcodes << "@___#{key} = Sprite.new(\"#{value}\",0,0)"
             else
               @opcodes << "@___#{key} = #{value}"
             end

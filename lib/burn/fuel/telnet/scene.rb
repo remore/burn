@@ -69,8 +69,10 @@ module Burn
           end
         end
         
+        def sprite(resource)
+          @context.instance_exec { @opcodes << "@screen.activated_sprite_objects << @___#{resource} if @screen.activated_sprite_objects.index(@___#{resource}).nil?" }
+        end
         
-              
 #            def fade_in
 #              @context.instance_exec do
 #                [
@@ -88,10 +90,6 @@ module Burn
 #            end
 #            
 #            def inline(code)
-#            end
-#            
-#            def sprite(resource)
-#              #@context.instance_exec {@code_blocks.push "sprite(&#{resource});"}
 #            end
 #            
 #            def screen(map, vars)

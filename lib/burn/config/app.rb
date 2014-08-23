@@ -3,8 +3,8 @@ module Burn
     class App < ConfigBase
       def initialize
         @terminal = :rom
-        @width = 80
-        @height = 24
+        @width = 73
+        @height = 13
         @frame_rate = :high
         @user_input = :disable
         @verbose = false
