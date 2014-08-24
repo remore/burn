@@ -1,16 +1,18 @@
 # Burn - a cross-platform toolkit to make a 8-bit flavored apps from Ruby DSLs
 
+A .nes application below is compiled in less than 500 lines of Ruby DSL code, including graphic and sound resources.([code](https://github.com/remore/burn/blob/master/example/rubima_wars/main.rb) / [online demo](http://k.swd.cc/burn/resource/example/rubima-wars/emulator.html))
+
 ![rubima wars pic](http://k.swd.cc/burn/resource/screenshot/rubima-wars.png)
 
-A .nes application above is compiled in less than 500 lines of Ruby DSL code, including graphic and sound resources.([code](https://github.com/remore/burn/blob/master/example/rubima_wars/main.rb) [online demo](http://k.swd.cc/burn/resource/example/rubima-wars/emulator.html))
+Next example is star animation. With .nes mode, you can generate .nes rom file like this,
 
 ![star animated gif](http://k.swd.cc/burn/resource/screenshot/star.gif)
 
-And next example is star animation. With .nes mode, you can generate .nes rom file like above,
+and mean while, you can generate telnet server application with using same DSL representation in Ruby. 
 
 ![some telnet app pic(test_licecap2.gif)](http://k.swd.cc/burn/resource/screenshot/rubima-wars.png)
 
-and mean while, you can generate telnet server application with using same DSL representation in Ruby. This dead simple sprite animations above are written like this:
+These dead simple sprite animations above are written as follows:
 
 ```ruby
 declare do
