@@ -4,15 +4,7 @@ A .nes application below is compiled in less than 500 lines of Ruby DSL code, in
 
 ![rubima wars pic](http://k.swd.cc/burn/resource/screenshot/rubima-wars.png)
 
-Next example is star animation. With .nes mode, you can generate .nes rom file like this,
-
-![star animated gif](http://k.swd.cc/burn/resource/screenshot/star.gif)
-
-and mean while, you can generate telnet server application with using same DSL representation in Ruby. 
-
-![star animated telnet server app](http://k.swd.cc/burn/resource/screenshot/star-telnet.gif)
-
-These dead simple sprite animations above are written as follows:
+Next example is cross-compilation. Assuming you write this simple Ruby DSL:
 
 ```ruby
 declare do
@@ -44,6 +36,14 @@ scene do
 EOH
 end
 ```
+
+With Burn, you can compile this to .nes:
+
+![star animated gif](http://k.swd.cc/burn/resource/screenshot/star.gif)
+
+and at the same time, generate telnet server application:
+
+![star animated telnet server app](http://k.swd.cc/burn/resource/screenshot/star-telnet.gif)
 
 Just like Recipe and Cookbook are DSLs for the Chef rubygem, this dead simple DSL is for the Burn rubygem, and we call it Fuel. 
 
