@@ -5,11 +5,7 @@ config :app do
   height 13
 end
 
-declare do
-  frame 0
-end
-
-scene do
+scene "main" do
   label "Action?", 2, 2
   label "Type one of following key codes:", 2, 3
   label "--------------", 2, 4
@@ -18,6 +14,8 @@ scene do
   
   label "(b) (*nix user only) Eject a default device", 2, 10
   
+  label "(c) Show current time", 2, 12
+  
   main_loop <<-EOH
     if is_pressed(:a) then
       goto "option_a"
@@ -25,23 +23,29 @@ scene do
     if is_pressed(:b) then
       goto "option_b"
     end
+    if is_pressed(:c) then
+      goto "option_c"
+    end
   EOH
 end
 
-
 scene "option_a" do
   color :bg, :blue, :darker
-  color :text, :white
   label RUBY_VERSION, 4, 4
+  wait 10
+  goto "main"
 end
 
 scene "option_b" do
   color :bg, :green, :darker
-  color :text, :red
-  main_loop <<-EOH
-    if frame==0 then
-      system "eject"
-      frame=1
-    end
-  EOH
+  label "now ejecting disc...", 4, 4
+  system "eject"
+  wait 10
+  goto "main"
+end
+
+scene "option_c" do
+  system "ruby -e 'puts Time.new'"
+  wait 10
+  goto "main"
 end

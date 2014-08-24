@@ -87,8 +87,10 @@ module Burn
             if !@@op.nil? then
               callback = proc do |s|
                @@op=nil
+               log "callback is called."
               end
               EM::defer(@@op, callback)
+             log "EM::defer is called."
             end
             @@vm.next_frame
           end
