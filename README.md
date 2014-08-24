@@ -10,7 +10,7 @@ Next example is star animation. With .nes mode, you can generate .nes rom file l
 
 and mean while, you can generate telnet server application with using same DSL representation in Ruby. 
 
-![some telnet app pic(test_licecap2.gif)](http://k.swd.cc/burn/resource/screenshot/rubima-wars.png)
+![star animated telnet server app](http://k.swd.cc/burn/resource/screenshot/star-telnet.gif)
 
 These dead simple sprite animations above are written as follows:
 
