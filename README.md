@@ -41,7 +41,7 @@ With Burn, you can compile this to .nes:
 
 ![star animated gif](http://k.swd.cc/burn/resource/screenshot/star.gif)
 
-and at the same time, generate telnet server application:
+and at the same time, you can run this as a telnet server application:
 
 ![star animated telnet server app](http://k.swd.cc/burn/resource/screenshot/star-telnet.gif)
 
@@ -123,7 +123,7 @@ Reference for :nes mode(coming soon)
 
 ## Notes
 
-### Other Resources including Discussions and Conference Talks
+### Discussions and Conference Talks
 
 A quick discussion at [Reddit.com](http://www.reddit.com/r/programming/comments/226vf0/build_your_own_nes_rom_file_with_ruby/)
 
