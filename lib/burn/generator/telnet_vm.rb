@@ -12,7 +12,7 @@ module Burn
         @wait = 10
         @opcodes = JitCompiler.new.compile(source) # compiled methods
         log @opcodes.join(":::")
-        @user_input = nil
+        @user_input = UserInput.new(conf)
         @conf = conf
         @finish = false
       end
@@ -42,7 +42,7 @@ module Burn
       
       def interrupt(signal)
         log "INTTERUPT_SETTING:" + @conf.app.user_input.to_s
-        @user_input = signal if @conf.app.user_input ==:enable
+        @user_input.receive_signal(signal)
       end
       
     end

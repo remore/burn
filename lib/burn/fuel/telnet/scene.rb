@@ -63,8 +63,8 @@ module Burn
             p=Pxes::CrubyTranspiler.new(Ripper.sexp(rrb_source),c,resource)
             start_label = "##{resource}-main_loop:" + @opcodes.count.to_s
             @opcodes << start_label
+            @opcodes << "@user_input.init_for_next_loop"
             @opcodes.concat p.to_rb.split("\n")
-            @opcodes << "@user_input = nil"
             @opcodes << "@pc = @opcodes.index(\"#{start_label}\")" #JUMP
           end
         end

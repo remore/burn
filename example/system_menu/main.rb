@@ -12,40 +12,25 @@ scene "main" do
 
   label "(a) Show the version of ruby of this system", 2, 6
   
-  label "(b) (*nix user only) Eject a default device", 2, 10
-  
-  label "(c) Show current time", 2, 12
+  label "(b) (*nix user only) Eject a default device", 2, 8
   
   main_loop <<-EOH
-    if is_pressed(:a) then
-      goto "option_a"
-    end
-    if is_pressed(:b) then
-      goto "option_b"
-    end
-    if is_pressed(:c) then
-      goto "option_c"
-    end
+    goto "option_a" if is_pressed(:a)
+    goto "option_b" if is_pressed(:b)
   EOH
 end
 
 scene "option_a" do
   color :bg, :blue, :darker
   label RUBY_VERSION, 4, 4
-  wait 10
+  wait 30
   goto "main"
 end
 
 scene "option_b" do
-  color :bg, :green, :darker
+  color :bg, :green, :lighter
   label "now ejecting disc...", 4, 4
   system "eject"
-  wait 10
-  goto "main"
-end
-
-scene "option_c" do
-  system "ruby -e 'puts Time.new'"
-  wait 10
+  wait 30
   goto "main"
 end

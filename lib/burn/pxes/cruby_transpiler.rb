@@ -109,7 +109,7 @@ module Burn
             # check if it matches dsl.
             case command
             when "is_pressed"
-              "@screen.is_pressed(" + parse_sexp(s[2]) + ", @user_input)"
+              "@screen.is_pressed(" + parse_sexp(s[2]) + ", @user_input.val)"
             when "rand"
               parse_sexp(s[1]) + "8()"
             else

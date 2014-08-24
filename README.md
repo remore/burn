@@ -1,6 +1,6 @@
 # Burn - a handy toolkit to make a .nes application from Ruby DSLs
 
-Burn is a free and open source framework that allows you to create 8-bit flavored application(.nes) using a Ruby DSL.
+Burn is a free and open source framework that allows you to create 8-bit flavored application(.nes rom and telnet) using a Ruby DSL.
 
 ```ruby
 scene do
