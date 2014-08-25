@@ -1,10 +1,10 @@
-# Burn - a handy toolkit to homebrew 8-bit flavored applications from Ruby DSLs
+# Burn - a handy toolkit to make 8-bit flavored applications from Ruby DSLs
 
-A .nes application below is compiled in less than 500 lines of Ruby DSL code, including graphic and sound resources.([code](https://github.com/remore/burn/blob/master/example/rubima_wars/main.rb) / [online demo](http://k.swd.cc/burn/resource/example/rubima-wars/emulator.html))
+Burn is a .nes rom file compiler. A .nes application below is an example of homebrewing in less than 500 lines of Ruby DSL code, including graphic and sound resources.([code](https://github.com/remore/burn/blob/master/example/rubima_wars/main.rb) / [online demo](http://k.swd.cc/burn/resource/example/rubima-wars/emulator.html))
 
 ![rubima wars pic](http://k.swd.cc/burn/resource/screenshot/rubima-wars.png)
 
-Next example is about cross-compilation. Assuming you write this simple Ruby DSL:
+Burn works as a telnet application server too. Assuming you write this simple Ruby DSL:
 
 ```ruby
 declare do
