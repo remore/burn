@@ -49,6 +49,8 @@ Just like Recipe and Cookbook are DSLs for the Chef rubygem, this dead simple DS
 
 Imagine 8-bit application like [ascii starwars movie](http://lifehacker.com/373571/watch-star-wars-in-text-via-telnet) can be created in seconds, seriously. Now is the time to go back and start to develop primitive, low-end application.
 
+![system menu example](http://k.swd.cc/burn/resource/screenshot/system-menu.gif)
+
 ## Table Of Contents
 
 * [Introduction](#introduction)
