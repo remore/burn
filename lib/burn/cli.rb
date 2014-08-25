@@ -43,10 +43,10 @@ EOS
         server "#{@workspace_root}/tmp/burn/release/js/", mainfile
         
       else
-        if @conf.app.terminal==:rom then
+        if @conf.app.target==:rom then
           make_and_play mainfile, options[:preview]
           
-        elsif @conf.app.terminal==:telnet then
+        elsif @conf.app.target==:telnet then
           say "starting telnet server #{@conf.server.ip_addr}:#{@conf.server.port}...."
           Server::Telnet.new(File.read("#{@workspace_root}/#{mainfile}"), @conf).start
         end

@@ -2,7 +2,7 @@ module Burn
   module Configuration
     class App < ConfigBase
       def initialize
-        @terminal = :rom
+        @target = :rom
         @width = 73
         @height = 13
         @frame_rate = :high

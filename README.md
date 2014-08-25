@@ -74,7 +74,7 @@ There are [countless ways out there](http://en.wikipedia.org/wiki/List_of_video_
 
 Burn have two modes, `:rom` mode nad `:telnet` mode.
 
-For `:rom` mode, Burn nternally contains cc65 executables inside its gemfile and calls them to compile. The main workflow is as follows.
+For `:rom` mode, Burn uses cc65 executables embedded in its gemfile for compilation. The main workflow is as follows.
 
 - translate ruby DSL file into c source code
 - compile them to make executable(*.nes) by calling cc65
@@ -107,7 +107,7 @@ Burn supports all major OS like MacOS, Unix-like systems and Windows.
     ls tmp/burn/ | grep main.nes
     
     # :telnet mode
-    echo -e "config(:app){ terminal :telnet }\nscene {label 'hello world'}" > main.rb
+    echo -e "config(:app){ target :telnet }\nscene {label 'hello world'}" > main.rb
     burn & # run telnet server
     telnet localhost 60000
 
