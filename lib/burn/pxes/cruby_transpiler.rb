@@ -110,8 +110,8 @@ module Burn
             case command
             when "is_pressed"
               "@screen.is_pressed(" + parse_sexp(s[2]) + ", @user_input.val)"
-            when "rand"
-              parse_sexp(s[1]) + "8()"
+            #when "rand"
+            #  parse_sexp(s[1]) + "8()"
             else
               parse_sexp(s[1]) + "(" + parse_sexp(s[2]) + ")"
             end
@@ -140,13 +140,30 @@ module Burn
             additional_condition = parse_sexp(s[3]) if !s[3].nil?
             #"#{keyword} (" + parse_sexp(s[1]) + "){" + parse_sexp(s[2]) + "} #{additional_condition}"
             label = "##{@resource_name}-" + [*0-9, *'a'..'z', *'A'..'Z'].sample(10).join
-            "@pc = @opcodes.index(\"#{label}\") if !(" + parse_sexp(s[1]) + ")\n" + parse_sexp(s[2]) + "\n#{label}"
+            #"@pc = @opcodes.index(\"#{label}\") if !(" + parse_sexp(s[1]) + ")\n" + parse_sexp(s[2]) + "\n#{label}"
+            if additional_condition then
+              # jump to else
+              # + script for if clause
+              # jump to end
+              # label for else
+              # + script for else
+              # label for end
+              "@pc = @opcodes.index(\"#{label}\") if !(" + parse_sexp(s[1]) + ")\n" \
+                + parse_sexp(s[2]) + "\n" \
+                + "@pc = @opcodes.index(\"#{label}-else\")\n" \
+                + "#{label}\n" \
+                + additional_condition + "\n" \
+                + "#{label}-else"
+            else
+              "@pc = @opcodes.index(\"#{label}\") if !(" + parse_sexp(s[1]) + ")\n" + parse_sexp(s[2]) + "\n#{label}"
+            end
+            
             
           #when :def
           # is not supported for to_c as return data type cannot be defined
           
           when :else
-            "else {" + parse_sexp(s[1]) + " } "
+            parse_sexp(s[1])
             
           else
             parse_sexp(s[1])
