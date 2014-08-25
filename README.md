@@ -1,10 +1,10 @@
-# Burn - a cross-platform toolkit to make a 8-bit flavored apps from Ruby DSLs
+# Burn - a handy toolkit to homebrew 8-bit flavored applications from Ruby DSLs
 
 A .nes application below is compiled in less than 500 lines of Ruby DSL code, including graphic and sound resources.([code](https://github.com/remore/burn/blob/master/example/rubima_wars/main.rb) / [online demo](http://k.swd.cc/burn/resource/example/rubima-wars/emulator.html))
 
 ![rubima wars pic](http://k.swd.cc/burn/resource/screenshot/rubima-wars.png)
 
-Next example is cross-compilation. Assuming you write this simple Ruby DSL:
+Next example is about cross-compilation. Assuming you write this simple Ruby DSL:
 
 ```ruby
 declare do
@@ -66,10 +66,6 @@ Imagine 8-bit application like [ascii starwars movie](http://lifehacker.com/3735
 
 ## Introduction
 
-### Why Burn
-
-There are [countless ways out there](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles) that emulate .nes game, but very few that create .nes rom file without hassle. This is the reason why @remore have developed Burn.
-
 ### How It Works
 
 Burn have two modes, `:rom` mode nad `:telnet` mode.
@@ -115,6 +111,8 @@ More Examples are available at example folder. kindly try to `git clone https://
 
 ## Fuel DSL
 
+Currently example code are definitely the best reference. As to documentation, please see following materials:
+
 [Reference for :nes mode](https://github.com/remore/burn/blob/master/FUEL-ROM.md)
 
 Reference for :nes mode(coming soon)
@@ -122,6 +120,12 @@ Reference for :nes mode(coming soon)
 ...and there is many TBDs(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
 
 ## Notes
+
+### Why Burn
+
+Primarily, to let anti-piracy movement gain significant momentum. There are [countless ways out there](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles) that emulate .nes game, but very few that create .nes rom file without hassle. This is the original reason why @remore have developed Burn.
+
+Secondarily, to get back a lost love to video game programming. Having high-spec machine is not always happy to us, human beings. Sometimes we'd better to look back the old era where many constrains still exist. You might think it's silly, but I'm serious. It's crazy fun to struggle.
 
 ### Discussions and Conference Talks
 
