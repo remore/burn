@@ -1,5 +1,5 @@
 config :app do
-  terminal :telnet
+  target :telnet
   height 100
 end
 

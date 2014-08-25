@@ -1,5 +1,5 @@
 config :app do
-  terminal :telnet
+  target :telnet
   user_input :enable
   width 73
   height 13
