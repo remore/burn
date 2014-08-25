@@ -1,6 +1,6 @@
 # Burn - a handy toolkit to make 8-bit flavored applications from Ruby DSLs
 
-Burn is a .nes rom file compiler. A .nes application below is an example of homebrewing in less than 500 lines of Ruby DSL code, including graphic and sound resources.([code](https://github.com/remore/burn/blob/master/example/rubima_wars/main.rb) / [online demo](http://k.swd.cc/burn/resource/example/rubima-wars/emulator.html))
+Burn is a .nes rom file compiler in Ruby. For example, a .nes application below is written in less than 500 lines of Ruby DSL code, including graphic and sound resources.([code](https://github.com/remore/burn/blob/master/example/rubima_wars/main.rb) / [online demo](http://k.swd.cc/burn/resource/example/rubima-wars/emulator.html))
 
 ![rubima wars pic](http://k.swd.cc/burn/resource/screenshot/rubima-wars.png)
 
