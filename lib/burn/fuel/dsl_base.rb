@@ -1,5 +1,5 @@
 module Burn
-  module Dsl
+  module Fuel
     class DslBase
       # blankslate
       instance_methods.each do |m|

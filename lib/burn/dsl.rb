@@ -1,8 +1,0 @@
-require 'burn/dsl/sound_effect'
-require 'burn/dsl/note'
-require 'burn/dsl/channel_stream'
-require 'burn/dsl/dsl_base'
-require 'burn/dsl/declare'
-require 'burn/dsl/sound'
-require 'burn/dsl/music'
-require 'burn/dsl/scene'

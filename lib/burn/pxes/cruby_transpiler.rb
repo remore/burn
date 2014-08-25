@@ -1,16 +1,8 @@
 module Burn
-  module Util
-    class Pxes
-      include Debug
-      attr_reader :sexp
+  module Pxes
+    class CrubyTranspiler < TranspilerBase
       
-      def initialize(sexp, context=nil, resource_name=nil)
-        @sexp = sexp
-        @context = context || self
-        @resource_name = resource_name
-      end
-      
-      def to_c
+      def to_rb
         parse_sexp(@sexp)
       end
       
@@ -28,13 +20,11 @@ module Burn
       #end
       
       def invoke_dsl_processing(exp)
-        generator = Generator::CSource.new(self)
-        Dsl::Scene.new(@resource_name, generator).instance_eval exp
-        # return the result
-        @context.instance_exec(generator.global) do |generator_global|
-          @global.concat generator_global
-        end
-        generator.code_blocks.join
+        generator = Generator::Telnet::JitCompiler.new
+        # class(@@)|instance(@) variable inside exp need to be stringified before the #instance_eval.
+        # Without this, variables will be evaluated immediately now (and will get disappered as a result of this) by #instance_eval 
+        Fuel::Telnet::Scene.new(@resource_name, generator).instance_eval exp.gsub(/(@[@\w]*)/, "\"\\1\"")
+        generator.opcodes.join "\n"
       end
       
       def parse_sexp(s)
@@ -45,18 +35,15 @@ module Burn
           log s[0]
           case s[0]
           when :assign
-            parse_sexp(s[1]) + "=" + parse_sexp(s[2]) + ";"
+            parse_sexp(s[1]) + "=" + parse_sexp(s[2])
             
-          when :var_field
-            s[1][1]
-          
-          when :var_ref
-            case s[1][1]
-            when "true", "false"
-              s[1][1].upcase
+          when :var_field, :var_ref
+            if s[1][0] == :@ident then
+              var_scope = "@___"
             else
-              s[1][1]
+              var_scope = ""
             end
+            var_scope + s[1][1]
             
           when :void_stmt
             "" # this happens when rip "if true then # do nothing end" type of code
@@ -73,7 +60,7 @@ module Burn
             parse_sexp(s[1]) + operator + parse_sexp(s[3])
             
           when :opassign
-            parse_sexp(s[1]) + parse_sexp(s[2]) + parse_sexp(s[3]) + ";"
+            parse_sexp(s[1]) + parse_sexp(s[2]) + parse_sexp(s[3])
             
           when :unary
             case s[1]
@@ -99,19 +86,22 @@ module Burn
             '"' + s[1] + '"'
             
           # this is why you can't use pre-defined dsl name as a variable name. e.g) you are not allowed to declare variables like show or label or stop. these all are defined dsl.
-          when :vcall 
-            if !Dsl::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
-              invoke_dsl_processing parse_sexp(s[1])
+          when :vcall
+            if s[1][0] == :@ident then
+              var_scope = "@___"
             else
-              parse_sexp(s[1])
+              var_scope = ""
             end
-            
+            s[1][1] = var_scope + s[1][1]
+            parse_sexp(s[1])
+          
+          # this is why you can't use pre-defined dsl name as a variable name. e.g) you are not allowed to declare variables like show or label or stop. these all are defined dsl.
           when :command
-            if !Dsl::Scene.new(@resource_name,self).methods.index(s[1][1].to_sym).nil? then
+            if !Fuel::Telnet::Scene.new(@resource_name,@context).methods.index(s[1][1].to_sym).nil? then
               #invoke_dsl_processing parse_sexp(s[1]) + "(" + parse_sexp( replace_vcall_to_symbol(s[2]) ) + ")"
               invoke_dsl_processing parse_sexp(s[1]) + "(" + parse_sexp( s[2] ) + ")"
             else
-              parse_sexp(s[1]) + "(" + parse_sexp(s[2]) + ");"
+              parse_sexp(s[1]) + "(" + parse_sexp(s[2]) + ")"
             end
             
           when :method_add_arg
@@ -119,9 +109,9 @@ module Burn
             # check if it matches dsl.
             case command
             when "is_pressed"
-              parse_sexp(s[1]) + "(PAD_" + parse_sexp(s[2]).delete(":").upcase + ")"
-            when "rand"
-              parse_sexp(s[1]) + "8()"
+              "@screen.is_pressed(" + parse_sexp(s[2]) + ", @user_input.val)"
+            #when "rand"
+            #  parse_sexp(s[1]) + "8()"
             else
               parse_sexp(s[1]) + "(" + parse_sexp(s[2]) + ")"
             end
@@ -148,13 +138,32 @@ module Burn
               keyword = "if"
             end
             additional_condition = parse_sexp(s[3]) if !s[3].nil?
-            "#{keyword} (" + parse_sexp(s[1]) + "){" + parse_sexp(s[2]) + "} #{additional_condition}"
+            #"#{keyword} (" + parse_sexp(s[1]) + "){" + parse_sexp(s[2]) + "} #{additional_condition}"
+            label = "##{@resource_name}-" + [*0-9, *'a'..'z', *'A'..'Z'].sample(10).join
+            #"@pc = @opcodes.index(\"#{label}\") if !(" + parse_sexp(s[1]) + ")\n" + parse_sexp(s[2]) + "\n#{label}"
+            if additional_condition then
+              # jump to else
+              # + script for if clause
+              # jump to end
+              # label for else
+              # + script for else
+              # label for end
+              "@pc = @opcodes.index(\"#{label}\") if !(" + parse_sexp(s[1]) + ")\n" \
+                + parse_sexp(s[2]) + "\n" \
+                + "@pc = @opcodes.index(\"#{label}-else\")\n" \
+                + "#{label}\n" \
+                + additional_condition + "\n" \
+                + "#{label}-else"
+            else
+              "@pc = @opcodes.index(\"#{label}\") if !(" + parse_sexp(s[1]) + ")\n" + parse_sexp(s[2]) + "\n#{label}"
+            end
+            
             
           #when :def
           # is not supported for to_c as return data type cannot be defined
           
           when :else
-            "else {" + parse_sexp(s[1]) + " } "
+            parse_sexp(s[1])
             
           else
             parse_sexp(s[1])
