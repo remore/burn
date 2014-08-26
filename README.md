@@ -70,7 +70,7 @@ Imagine 8-bit application like [ascii starwars movie](http://lifehacker.com/3735
 
 ### How It Works
 
-Burn have two modes, `:rom` mode nad `:telnet` mode.
+Burn have two modes, `:rom` mode and `:telnet` mode.
 
 For `:rom` mode, Burn uses cc65 executables embedded in its gemfile for compilation. The main workflow is as follows.
 
@@ -117,7 +117,7 @@ Currently example code are definitely the best reference. As to documentation, p
 
 [Reference for :nes mode](https://github.com/remore/burn/blob/master/FUEL-ROM.md)
 
-Reference for :nes mode(coming soon)
+Reference for :telnet mode(coming soon)
 
 ...and there is many TBDs(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
 
