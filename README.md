@@ -131,7 +131,7 @@ Secondarily, to get back a lost love to video game programming. Having high-spec
 
 ### Discussions and Conference Talks
 
-A quick discussion at [Reddit.com](http://www.reddit.com/r/programming/comments/226vf0/build_your_own_nes_rom_file_with_ruby/)
+A quick discussion at [Reddit.com](http://www.reddit.com/r/programming/comments/226vf0/build_your_own_nes_rom_file_with_ruby/) and [HackerNews](https://news.ycombinator.com/item?id=8222322)
 
 [A Talk at RubyKaigi 2014](http://rubykaigi.org/2014/presentation/S-KeiSawada)
 
