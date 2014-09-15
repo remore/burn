@@ -4,7 +4,7 @@ module Burn
       def initialize
         @ip_addr = '127.0.0.1'
         @port = 60000
-        @max_clients = 1
+        @max_clients = 10
       end
     end
   end
