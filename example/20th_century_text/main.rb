@@ -1,5 +1,6 @@
 config :app do
   target :telnet
+  frame_rate :extreme
 end
 
 config :server do
