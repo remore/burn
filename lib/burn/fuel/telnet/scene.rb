@@ -73,6 +73,10 @@ module Burn
           @context.instance_exec { @opcodes << "@screen.activated_sprite_objects << @___#{resource} if @screen.activated_sprite_objects.index(@___#{resource}).nil?" }
         end
         
+        def inline(code)
+          @context.instance_exec { @opcodes << code }
+        end
+
 #            def fade_in
 #              @context.instance_exec do
 #                [

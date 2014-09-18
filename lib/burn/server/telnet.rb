@@ -104,6 +104,7 @@ module Burn
       
       def frame_rate
         case @@conf.app.frame_rate
+        when :extreme then 0.01
         when :high then 0.03
         when :normal then 0.5
         when :slow then 1.0
