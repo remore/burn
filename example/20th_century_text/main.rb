@@ -677,9 +677,9 @@ EOH
 end
 
 scene do
-  inline "@___lh1_tmp.x=0"
+  inline "@___lh1_tmp.x=2"
   inline "@___lh1_tmp.y=5"
-  inline "@___lh2_tmp.x=22"
+  inline "@___lh2_tmp.x=24"
   inline "@___lh2_tmp.y=5"
   main_loop <<-EOH
     frame+=1
