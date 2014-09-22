@@ -45,9 +45,9 @@ and at the same time, you can run this as a telnet server application:
 
 ![star animated telnet server app](http://k.swd.cc/burn/resource/screenshot/star-telnet.gif)
 
-Just like Recipe and Cookbook are DSLs for the Chef rubygem, this dead simple DSL is for the Burn rubygem, and we call it Fuel. 
+Just like Recipes and Cookbooks are DSLs for the Chef rubygem, this dead simple DSL is for the Burn rubygem, and we call it Fuel. 
 
-Imagine 8-bit application like [ascii starwars movie](http://lifehacker.com/373571/watch-star-wars-in-text-via-telnet) can be created in seconds, seriously. Now is the time to go back and start to develop primitive, low-end application.
+Imagine an 8-bit application like [ascii starwars movie](http://lifehacker.com/373571/watch-star-wars-in-text-via-telnet) can be created in seconds, seriously. Now is the time to go back and revisit what a low-resolution application is.
 
 ![system menu example](http://k.swd.cc/burn/resource/screenshot/system-menu.gif)
 
@@ -70,12 +70,12 @@ Imagine 8-bit application like [ascii starwars movie](http://lifehacker.com/3735
 
 ### How It Works
 
-Burn have two modes, `:rom` mode and `:telnet` mode.
+Burn has two modes, `:rom` mode and `:telnet` mode.
 
 For `:rom` mode, Burn uses cc65 executables embedded in its gemfile for compilation. The main workflow is as follows.
 
 - translate ruby DSL file into c source code
-- compile them to make executable(*.nes) by calling cc65
+- compile source to make executable(*.nes) by calling cc65
 - provide an emulator(JSNES) for rapid application development
 
 Meanwhile, for `:telnet` mode Burn works like this:
@@ -85,8 +85,8 @@ Meanwhile, for `:telnet` mode Burn works like this:
 
 ### Requirements
 
-- Ruby1.9.1+
-- gcc (Winows users do not require this)
+- Ruby 1.9.1+
+- gcc (Windows users do not require this)
 
 Burn supports all major OS like MacOS, Unix-like systems and Windows.
 
@@ -109,25 +109,27 @@ Burn supports all major OS like MacOS, Unix-like systems and Windows.
     burn & # run telnet server
     telnet localhost 60000
 
-More Examples are available at example folder. kindly try to `git clone https://github.com/remore/burn.git` and play.
+More Examples are available at example folder. Please clone the repository using `git clone https://github.com/remore/burn.git` and play.
 
 ## Fuel DSL
 
-Currently example code are definitely the best reference. As to documentation, please see following materials:
+Currently example code is the best reference. For documentation, please see following materials:
 
 [Reference for :nes mode](https://github.com/remore/burn/blob/master/FUEL-ROM.md)
 
 Reference for :telnet mode(coming soon)
 
-...and there is many TBDs(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
+Additional reference material is TBD:
+
+- articles about #show, #sprite, #rand and #is_pressed are coming very soon
 
 ## Notes
 
 ### Why Burn
 
-Primarily, to let anti-piracy movement gain significant momentum. There are [countless ways out there](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles) that emulate .nes game, but very few that create .nes rom file without hassle. This is the original reason why @remore have developed Burn.
+Primarily, to help the anti-piracy movement gain significant momentum. There are [countless ways out there](http://en.wikipedia.org/wiki/List_of_video_game_emulators#Consoles) that emulate .nes games, but very few that create .nes rom file without hassle. This is the original reason why @remore has developed Burn.
 
-Secondarily, to get back a lost love to video game programming. Having high-spec machine is not always happy to us, human beings. Sometimes we'd better to look back the old era where many constrains still exist. You might think it's silly, but I'm serious. It's crazy fun to struggle.
+Secondarily, to get back a lost love to video game programming. Having high-spec machine will not always make human beings happy. Sometimes we need a reminder to look back to an older era where many constrains still exist. You might think it's silly, but I'm serious. It's crazy fun to struggle.
 
 ### Discussions and Conference Talks
 
@@ -153,7 +155,7 @@ GPLv3
 Here are a few todo-memo for :nes mode.
 
 * New VM Support
-    * compatiblize with enchant.js
+    * compatability with enchant.js
 * Enhancement of Fuel DSL
     * for Screen, support screen scroll and simple sprite
     * for Screen, adding .bmp and .png support to make designing pattern table easier
