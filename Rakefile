@@ -1,1 +1,1 @@
-# TBD for test or build
+require "bundler/gem_tasks"
