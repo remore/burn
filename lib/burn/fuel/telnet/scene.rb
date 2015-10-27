@@ -35,7 +35,7 @@ module Burn
         end
 
         def label(string, x=0, y=1)
-          @context.instance_exec { @opcodes << "@screen.display[#{y}][#{x},#{string.length}] = \"#{string.gsub(/"/, '"')}\"" }
+          @context.instance_exec { @opcodes << "@screen.display[#{y}][#{x},#{string.length}] = \"#{string.gsub(/"/, '\"')}\"" }
         end
 
         def wait(interval)

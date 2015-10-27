@@ -3,9 +3,9 @@ module Burn
     class TelnetVm
       include Generator::Telnet
       include Debug
-      attr_reader :screen
+      attr_reader :screen, :time
       attr_accessor :wait
-      
+
       def initialize(source, conf)
         @pc = 0 # Program Counter
         @screen = Screen.new(conf)
@@ -15,8 +15,9 @@ module Burn
         @user_input = UserInput.new(conf)
         @conf = conf
         @finish = false
+        @time = Time.now.to_i
       end
-      
+
       def next_frame
         log @pc
         if @wait > 0 then
@@ -39,12 +40,12 @@ module Burn
           # do nothing
         end
       end
-      
+
       def interrupt(signal)
         log "INTTERUPT_SETTING:" + @conf.app.user_input.to_s
         @user_input.receive_signal(signal)
       end
-      
+
     end
   end
 end
