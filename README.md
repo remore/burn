@@ -9,13 +9,13 @@ Burn works as a telnet application server too. Assuming you write this simple Ru
 ```ruby
 declare do
   star <<-EOH
-                
+
        11       
        11       
       1111      
       1111      
 1111111111111111
- 11111111111111 
+ 11111111111111
   111111111111  
    1111111111   
     11111111    
@@ -24,7 +24,7 @@ declare do
    1111  1111   
    11      11   
   1          1  
-                
+
 EOH
 end
 
@@ -45,7 +45,7 @@ and at the same time, you can run this as a telnet server application:
 
 ![star animated telnet server app](http://k.swd.cc/burn/resource/screenshot/star-telnet.gif)
 
-Just like Recipes and Cookbooks are DSLs for the Chef rubygem, this dead simple DSL is for the Burn rubygem, and we call it Fuel. 
+Just like Recipes and Cookbooks are DSLs for the Chef rubygem, this dead simple DSL is for the Burn rubygem, and we call it Fuel.
 
 Imagine an 8-bit application like [ascii starwars movie](http://lifehacker.com/373571/watch-star-wars-in-text-via-telnet) can be created in seconds, seriously. Now is the time to go back and revisit what a low-resolution application is.
 
@@ -103,13 +103,22 @@ Burn supports all major OS like MacOS, Unix-like systems and Windows.
     echo "scene {label 'hello world'}" > main.rb
     burn # make .nes rom and launch .nes emulator
     ls tmp/burn/ | grep main.nes
-    
+
     # :telnet mode
     echo -e "config(:app){ target :telnet }\nscene {label 'hello world'}" > main.rb
     burn & # run telnet server
     telnet localhost 60000
 
-More Examples are available at example folder. Please clone the repository using `git clone https://github.com/remore/burn.git` and play.
+Examples are available at example/ folder. Please clone the repository using `git clone https://github.com/remore/burn.git` and play.
+
+### Handy Commands
+
+    # Use text file as FuelDSL to run telnet server
+    burn fuel README.md > main.rb && burn &
+    telnet localhost 60000
+
+    # More detailed usage of burn fuel command
+    burn fuel README.md -w 60 -h 20 -t 300
 
 ## Fuel DSL
 
