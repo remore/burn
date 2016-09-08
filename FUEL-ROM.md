@@ -502,5 +502,5 @@ end
 
 ### Programming With .rrb(Restricted Ruby) Syntax
 
-TBD(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
-
+- Afterimage of each sprite can be removed by adding `inline "oam_clear();"` statement at the top of .rrb program source(at the top line of source text for `main_loop`), as discussed in [issue #20](https://github.com/remore/burn/issues/20#issuecomment-245478929)
+- more details are TBD(articles about #show, #sprite, #rand and #is_pressed are coming very soon)
