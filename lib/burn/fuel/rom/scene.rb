@@ -182,6 +182,7 @@ module Burn
               "ppu_on_all();",
               "while(1){",
                 "ppu_waitnmi(); //wait for next TV frame",
+                "oam_clear();"
             ].each {|p| @code_blocks.push p}
             
             # parse ruby source code and process them partially
