@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
   s.add_dependency "thor"
   s.add_dependency "archive-tar-minitar"
   s.add_dependency "eventmachine"
+
+  s.add_development_dependency "bundler", "~> 1.7"
   
   s.add_development_dependency "rake"
 end
