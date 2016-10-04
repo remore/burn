@@ -103,7 +103,9 @@ module Burn
                 iChrCount+=1
               else
                 if c=='d' then
-                  @code_blocks.push sprintf("#{vname}[%d]=0x10+%s;", nmi_plots.index([x+iChrCount,y])*3+2, args.shift)
+                  shifted_arg = args.shift
+                  shifted_arg = shifted_arg.to_s.strip != '' ? "+#{shifted_arg}" : ''
+                  @code_blocks.push sprintf("#{vname}[%d]=0x10%s;", nmi_plots.index([x+iChrCount,y])*3+2, shifted_arg)
                   iChrCount+=1
                 elsif c=='s' then
                   args.shift.split(//).each do |d|
